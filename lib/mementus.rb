@@ -1,5 +1,5 @@
-require "mementus/version"
+require 'virtus'
+require 'axiom-memory-adapter'
 
-module Mementus
-  # Your code goes here...
-end
+require 'mementus/version'
+require 'mementus/model'
