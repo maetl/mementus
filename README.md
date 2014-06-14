@@ -1,6 +1,19 @@
 # Mementus
 
-TODO: Write a gem description
+```ruby
+# Proof of concept for a toy ORM that combines some aspects of the
+# ActiveRecord API with an in-memory query model based on the Axiom
+# relational algebra API.
+#
+# The weirdest trick is that the data stored in the relational model
+# is a read-only index that never gets re-materialised back into the
+# model objects themselves (though Axiom does seem to be capable of
+# doing this).
+# 
+# Instead of returning mapped data from queries, the Ruby object_id
+# is used as a reference to point to the existing instance in the
+# runtime object space.
+```
 
 ## Installation
 
@@ -18,7 +31,38 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+To define model classes, inherit from the `Mementus::Model` base class and add attributes using the [Virtus API](https://github.com/solnic/virtus):
+
+```
+class Book < Mementus::Model
+  attribute :title, String
+  attribute :author, String
+end
+```
+
+Create new instances by passing data through the constructor or assigning attributes directly:
+
+```
+book1 = Book.new(
+  :title => "Gravity's Rainbow",
+  :author => "Thomas Pynchon"
+)
+
+book2 = Book.new
+book2.title = The Golden Notebook
+book2.author = Doris Lessing
+```
+
+To write objects to the in-memory index, call their `#create` method:
+
+```
+book3 = Book.new(
+  :title => "Crash",
+  :author => "J.G. Ballard"
+)
+
+book3.create
+```
 
 ## Contributing
 
