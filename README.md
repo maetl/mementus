@@ -1,5 +1,7 @@
 # Mementus
 
+[![Build Status](https://travis-ci.org/maetl/mementus.svg?branch=master)](https://travis-ci.org/maetl/mementus)
+
 ```ruby
 # Proof of concept for a toy ORM that combines some aspects of the
 # ActiveRecord API with an in-memory query model based on the Axiom
