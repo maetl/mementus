@@ -49,11 +49,11 @@ book1 = Book.new(
 )
 
 book2 = Book.new
-book2.title = The Golden Notebook
-book2.author = Doris Lessing
+book2.title = "The Golden Notebook"
+book2.author = "Doris Lessing"
 ```
 
-To write objects to the in-memory index, call their `#create` method:
+To write objects to the in-memory index, call their `create` method:
 
 ```
 book3 = Book.new(
