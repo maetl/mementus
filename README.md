@@ -69,9 +69,13 @@ book3.create
 The query API is currently being worked on. Right now to test it out, you can access the relational collection for each model through the `collection` method, and execute basic matching queries using the `where` method:
 
 ```ruby
-Book.collection.where(author: "Doris Lessing")
+Book.collection.count
 
-Book.collection.where(title: "Crash")
+Book.collection.first
+
+Book.where(author: "Doris Lessing")
+
+Book.where(title: "Crash")
 ```
 
 ## Contributing
