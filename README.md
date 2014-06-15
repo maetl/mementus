@@ -33,7 +33,7 @@ Or install it yourself as:
 
 To define model classes, inherit from the `Mementus::Model` base class and add attributes using the [Virtus API](https://github.com/solnic/virtus):
 
-```
+```ruby
 class Book < Mementus::Model
   attribute :title, String
   attribute :author, String
@@ -42,7 +42,7 @@ end
 
 Create new instances by passing data through the constructor or assigning attributes directly:
 
-```
+```ruby
 book1 = Book.new(
   :title => "Gravity's Rainbow",
   :author => "Thomas Pynchon"
@@ -55,13 +55,21 @@ book2.author = "Doris Lessing"
 
 To write objects to the in-memory index, call their `create` method:
 
-```
+```ruby
 book3 = Book.new(
   :title => "Crash",
   :author => "J.G. Ballard"
 )
 
 book3.create
+```
+
+The query API is currently being worked on. Right now to test it out, you can access the relational collection for each model through the `collection` method, and execute basic matching queries using the `where` method:
+
+```ruby
+Book.collection.where(author: "Doris Lessing")
+
+Book.collection.where(title: "Crash")
 ```
 
 ## Contributing
