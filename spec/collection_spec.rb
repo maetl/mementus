@@ -22,7 +22,7 @@ describe Mementus::Model do
 
     it "finds item by matching attribute" do
       expect(Item.where(order: 10).count).to eq 1
-      expect(Item.where(order: 10).first.title).to eq "Item: 9"
+      expect(Item.where(order: 10).first.name).to eq "Item: 9"
     end
 
   end
