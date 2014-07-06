@@ -1,5 +1,5 @@
 require 'virtus'
 require 'axiom-memory-adapter'
 
-require 'mementus/version'
-require 'mementus/model'
+require_relative 'mementus/version'
+require_relative 'mementus/model'

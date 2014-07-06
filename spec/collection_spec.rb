@@ -9,11 +9,13 @@ describe Mementus::Model do
       attribute :order, Integer
     end
 
-    20.times do |i|
-      item = Item.new
-      item.name = "Item: #{i.to_s}"
-      item.order = i + 1
-      item.create
+    before(:all) do
+      20.times do |i|
+        item = Item.new
+        item.name = "Item: #{i.to_s}"
+        item.order = i + 1
+        item.create
+      end
     end
 
     it "counts created items" do
