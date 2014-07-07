@@ -16,17 +16,17 @@ describe Mementus::Model do
       )
     }
 
-    let(:object_id) {
-        mapping.object_id.to_s
+    let(:cache_key) {
+      mapping.cache_key
     }
 
     it "maps attribute schema to tuple" do
-      schema = [[:__object_id, String], [:description, String], [:number, Integer]]
+      schema = [[:__cache_key, String], [:description, String], [:number, Integer]]
       expect(mapping.schema_tuple).to eq schema
     end
 
     it "maps attribute values to tuple" do
-      values = [object_id, "Hello world.", 2014]
+      values = [mapping.cache_key, "Hello world.", 2014]
       expect(mapping.values_tuple).to eq values
     end
 

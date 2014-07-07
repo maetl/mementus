@@ -2,20 +2,7 @@
 
 [![Build Status](https://travis-ci.org/maetl/mementus.svg?branch=master)](https://travis-ci.org/maetl/mementus)
 
-```ruby
-# Proof of concept for a toy ORM that combines some aspects of the
-# ActiveRecord API with an in-memory query model based on the Axiom
-# relational algebra API.
-#
-# The weirdest trick is that the data stored in the relational model
-# is a read-only index that never gets re-materialised back into the
-# model objects themselves (though Axiom does seem to be capable of
-# doing this).
-# 
-# Instead of returning mapped data from queries, the Ruby object_id
-# is used as a reference to point to the existing instance in the
-# runtime object space.
-```
+Proof of concept for a toy ORM that combines some aspects of the ActiveRecord API with an in-memory query model based on the Axiom relational algebra API.
 
 ## Installation
 

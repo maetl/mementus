@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["me@maetl.net"]
   spec.description   = %q{In-memory data model}
   spec.summary       = %q{In-memory data model}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/maetl/mementus"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)

@@ -7,15 +7,6 @@ module Mementus
   # ActiveRecord API with an in-memory query model based on the Axiom
   # relational algebra API.
   #
-  # The weirdest trick is that the data stored in the relational model
-  # is a read-only index that never gets re-materialised back into the
-  # model objects themselves (though Axiom does seem to be capable of
-  # doing this).
-  # 
-  # Instead of returning mapped data from queries, the Ruby object_id
-  # is used as a reference to point to the existing instance in the
-  # runtime object space.
-  #
   class Model
  
     @@local_storage = nil
@@ -25,12 +16,18 @@ module Mementus
       name_without_namespace = name.split("::").last
       name_without_namespace.gsub(/([^\^])([A-Z])/,'\1_\2').downcase.to_sym
     end
+
+    # Unique cache identifier for this instance
+    #
+    def cache_key
+      "#{self.class.name_to_sym.to_s}-#{object_id.to_s}"
+    end
  
     # TODO: this mapping could be based on declared indexes,
     # rather than dumping the entire attribute schema here.
     #
     def schema_tuple
-      tuple = [[:__object_id, String]]
+      tuple = [[:__cache_key, String]]
       attribute_set.each do |attribute_type|
         tuple << [attribute_type.name.to_sym, attribute_type.primitive]
       end
@@ -41,7 +38,7 @@ module Mementus
     # rather than dumping the entire attribute data set here.
     #
     def values_tuple
-      tuple = [object_id.to_s]
+      tuple = [cache_key]
       attributes.each do |_, attribute_value|
         tuple << attribute_value
       end
@@ -58,6 +55,7 @@ module Mementus
     def create
       ensure_registered(self)
       local_storage[self.class.name_to_sym].insert([values_tuple])
+      self.class.cache_put(self.cache_key, self)
     end
  
     def ensure_registered(model)
@@ -79,26 +77,63 @@ module Mementus
     end
  
     def local_storage
-      unless @@local_storage
-        @@local_storage = Axiom::Adapter::Memory.new
-      end
-      @@local_storage
+      @@local_storage ||= Axiom::Adapter::Memory.new
     end
  
     def self.collection
       @@local_storage[name_to_sym]
     end
+
+    def self.all
+      self.collection.inject([]) do |list, relation|
+        list << self.cache_get(relation[:__cache_key])
+      end
+    end
  
-    # Stub implementation that demonstrates the ObjectSpace
-    # reference grabbing.
+    # The where operation restricts the collection based on the
+    # passed in constraints.
     #
-    # Currently just splats to an array instead of handing back
-    # a chainable scope object.
+    # Pass in a key-value hash to restrict based on matching attributes by equality.
+    #
+    # Pass in a block to construct a more specialised predicate match.
     # 
     def self.where(constraints)
       self.collection.restrict(constraints).inject([]) do |list, relation|
-        list << ObjectSpace._id2ref(relation[:__object_id].to_i)
+        list << self.cache_get(relation[:__cache_key])
       end
+    end
+
+    # Order the collection by attribute and direction
+    # TODO: pass relations as scopes
+    def self.order(constraints)
+      ordered_relations = self.collection.sort_by do |relation|
+        constraints.keys.inject([]) do |list, constraint|
+          direction = constraints[constraint].to_sym
+          direction = :asc unless direction == :desc
+          list << relation.send(constraint.to_sym).send(direction)
+        end
+      end
+      self.materialize(ordered_relations)
+    end
+
+    private
+
+    def self.materialize(collection)
+      collection.inject([]) do |list, relation|
+        list << self.cache_get(relation[:__cache_key])
+      end
+    end
+
+    def self.cache
+      @@cache ||= {}
+    end
+
+    def self.cache_put(cache_key, object)
+      self.cache[cache_key] = object
+    end
+
+    def self.cache_get(cache_key)
+      self.cache[cache_key]
     end
  
   end

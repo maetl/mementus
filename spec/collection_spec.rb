@@ -22,9 +22,21 @@ describe Mementus::Model do
       expect(Item.collection.count).to eq 20
     end
 
-    it "finds item by matching attribute" do
+    it "provides materialized objects" do
+      expect(Item.all.count).to eq 20
+      expect(Item.all.first.name).to eq "Item: 0"
+    end
+
+    it "finds item by equality match" do
       expect(Item.where(order: 10).count).to eq 1
       expect(Item.where(order: 10).first.name).to eq "Item: 9"
+    end
+
+    it "finds items by predicate match" do
+      collection = Item.order(order: :desc)
+      expect(collection.count).to eq 20
+      expect(collection.first.name).to eq "Item: 19"
+      expect(collection.last.name).to eq "Item: 0"
     end
 
   end
