@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/maetl/mementus.svg?branch=master)](https://travis-ci.org/maetl/mementus)
 
-Proof of concept for a toy ORM that combines some aspects of the ActiveRecord API with an in-memory query model based on the Axiom relational algebra API.
+Mementus is a transient ORM for creating and querying in-memory object models.
 
 ## Installation
 
@@ -19,6 +19,8 @@ Or install it yourself as:
     $ gem install mementus
 
 ## Usage
+
+### Defining model classes
 
 To define model classes, inherit from the `Mementus::Model` base class and add attributes using the [Virtus API](https://github.com/solnic/virtus):
 
@@ -42,6 +44,8 @@ book2.title = "The Golden Notebook"
 book2.author = "Doris Lessing"
 ```
 
+### Creating objects
+
 To write objects to the in-memory index, call their `create` method:
 
 ```ruby
@@ -53,16 +57,35 @@ book3 = Book.new(
 book3.create
 ```
 
-The query API is currently being worked on. Right now to test it out, you can access the relational collection for each model through the `collection` method, and execute basic matching queries using the `where` method:
+### Matching queries
+
+Basic match queries can be constructed by passing a predicate hash to the `where` method:
 
 ```ruby
-Book.collection.count
-
-Book.collection.first
-
 Book.where(author: "Doris Lessing")
 
 Book.where(title: "Crash")
+```
+
+### Scoped queries
+
+Reusable query shortcuts can be constructed on the model class by defining a `scope`:
+
+```ruby
+class Book < Mementus::Model
+  attribute :title, String
+  attribute :author, String
+  attribute :genre, String
+  scope :scifi, genre: 'scifi'
+  scope :romance, genre: 'romance'
+end 
+```
+
+These defined scopes become class methods on the model:
+
+```ruby
+scifi_books = Book.scifi
+romance_books = Book.romance
 ```
 
 ## Contributing

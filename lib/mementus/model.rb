@@ -103,6 +103,17 @@ module Mementus
       end
     end
 
+    # TODO: fix incomplete scope chaining
+    def self.scope(name, conditions)
+      if conditions.is_a? Hash
+        scope_method = lambda { self.where(conditions) }
+      elsif conditions.is_a? Proc
+        scope_method = conditions
+      end
+
+      define_singleton_method(name, &scope_method)
+    end
+
     # Order the collection by attribute and direction
     # TODO: pass relations as scopes
     def self.order(constraints)
