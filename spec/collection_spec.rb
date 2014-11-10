@@ -28,16 +28,16 @@ describe Mementus::Model do
     end
 
     it "finds item by equality match" do
-      collection = Item.where(order: 10).all
+      collection = Item.where(order: 10)
       expect(collection.count).to eq 1
-      expect(collection.first.name).to eq "Item: 9"
+      expect(collection.objects.first.name).to eq "Item: 9"
     end
 
     it "finds items by predicate match" do
-      collection = Item.order(order: :desc).all
+      collection = Item.order(order: :desc)
       expect(collection.count).to eq 20
-      expect(collection.first.name).to eq "Item: 19"
-      expect(collection.last.name).to eq "Item: 0"
+      expect(collection.objects.first.name).to eq "Item: 19"
+      expect(collection.objects.last.name).to eq "Item: 0"
     end
 
   end

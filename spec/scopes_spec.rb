@@ -21,8 +21,8 @@ describe Mementus::Model do
   describe "#scope" do
 
     it "can execute named scopes" do
-      expect(CuteThing.cats.all.count).to eq 10
-      expect(CuteThing.dogs.all.count).to eq 10
+      expect(CuteThing.cats.count).to eq 10
+      expect(CuteThing.dogs.count).to eq 10
     end
 
   end

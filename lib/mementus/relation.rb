@@ -7,7 +7,7 @@ module Mementus
       end
 
       def all
-        Query.new(self.collection, self.cache).all
+        Query.new(self.collection, self.cache).objects
       end
 
       def order(constraints)
@@ -45,10 +45,22 @@ module Mementus
       end
 
       # Materializes the relation to an array of model objects.
-      def all
+      def objects
         @relation.inject([]) do |list, relation|
           list << @cache[relation[:__cache_key]]
         end
+      end
+
+      # Enumerate over each object.
+      def each(&block)
+        @relation.each do |relation|
+          yield block
+        end
+      end
+
+      # Number of objects.
+      def count
+        objects.count
       end
 
     end
