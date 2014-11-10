@@ -6,15 +6,11 @@ Mementus is a transient ORM for creating and querying in-memory object models.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this line to your application's Gemfile and `bundle` or `bundle update`:
 
     gem 'mementus'
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
+Or install with your local Rubygems:
 
     $ gem install mementus
 
@@ -31,6 +27,8 @@ class Book < Mementus::Model
 end
 ```
 
+### Creating objects
+
 Create new instances by passing data through the constructor or assigning attributes directly:
 
 ```ruby
@@ -43,8 +41,6 @@ book2 = Book.new
 book2.title = "The Golden Notebook"
 book2.author = "Doris Lessing"
 ```
-
-### Creating objects
 
 To write objects to the in-memory index, call their `create` method:
 
@@ -87,6 +83,12 @@ These defined scopes become class methods on the model:
 scifi_books = Book.scifi
 romance_books = Book.romance
 ```
+
+## Roadmap
+
+- 0.2: Query API
+- 0.3: Relationships API
+- 0.4: Value objects
 
 ## Contributing
 
