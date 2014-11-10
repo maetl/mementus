@@ -8,7 +8,12 @@ module Mementus
   # relational algebra API.
   #
   class Model
- 
+
+    def self.inherited(concrete_model)
+      concrete_model.send(:include, Virtus.model)
+      concrete_model.send(:extend, Relation::ClassMethods)
+    end
+
     @@local_storage = nil
     @@model_registry = {}
  
@@ -43,10 +48,6 @@ module Mementus
         tuple << attribute_value
       end
       tuple
-    end
- 
-    def self.inherited(concrete_model)
-      concrete_model.send(:include, Virtus.model)
     end
  
     # Create only writes to memory. It's required in order to
@@ -84,25 +85,6 @@ module Mementus
       @@local_storage[name_to_sym]
     end
 
-    def self.all
-      self.collection.inject([]) do |list, relation|
-        list << self.cache_get(relation[:__cache_key])
-      end
-    end
- 
-    # The where operation restricts the collection based on the
-    # passed in constraints.
-    #
-    # Pass in a key-value hash to restrict based on matching attributes by equality.
-    #
-    # Pass in a block to construct a more specialised predicate match.
-    # 
-    def self.where(constraints)
-      self.collection.restrict(constraints).inject([]) do |list, relation|
-        list << self.cache_get(relation[:__cache_key])
-      end
-    end
-
     # TODO: fix incomplete scope chaining
     def self.scope(name, conditions)
       if conditions.is_a? Hash
@@ -114,26 +96,7 @@ module Mementus
       define_singleton_method(name, &scope_method)
     end
 
-    # Order the collection by attribute and direction
-    # TODO: pass relations as scopes
-    def self.order(constraints)
-      ordered_relations = self.collection.sort_by do |relation|
-        constraints.keys.inject([]) do |list, constraint|
-          direction = constraints[constraint].to_sym
-          direction = :asc unless direction == :desc
-          list << relation.send(constraint.to_sym).send(direction)
-        end
-      end
-      self.materialize(ordered_relations)
-    end
-
     private
-
-    def self.materialize(collection)
-      collection.inject([]) do |list, relation|
-        list << self.cache_get(relation[:__cache_key])
-      end
-    end
 
     def self.cache
       @@cache ||= {}
