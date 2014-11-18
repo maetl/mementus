@@ -82,7 +82,11 @@ module Mementus
     end
  
     def self.collection
-      @@local_storage[name_to_sym]
+      if @@local_storage.has_key?(name_to_sym)
+        @@local_storage[name_to_sym]
+      else
+        Axiom::Relation.new(self.new.schema_tuple)
+      end
     end
 
     # TODO: fix incomplete scope chaining
