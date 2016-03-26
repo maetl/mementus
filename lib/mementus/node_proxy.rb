@@ -17,8 +17,10 @@ module Mementus
       @graph.each_adjacent(@node, &block)
     end
 
-    def edges
-      each_adjacent.to_a
+    def adjacent
+      each_adjacent.to_a.map do |node|
+        self.class.new(node, @graph)
+      end
     end
   end
 end
