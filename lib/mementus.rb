@@ -1,11 +1,3 @@
-require 'virtus'
-require 'axiom-memory-adapter'
-
-require_relative 'mementus/version'
-require_relative 'mementus/adapter'
-require_relative 'mementus/relation'
-require_relative 'mementus/model'
-
 require_relative 'mementus/graph'
 require_relative 'mementus/node'
 require_relative 'mementus/edge'
