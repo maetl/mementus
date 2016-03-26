@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Mementus::NodeProxy do
   specify '#new' do
     graph = Mementus::Graph.new
