@@ -41,6 +41,14 @@ module Mementus
       has_node?(edge.from) && @index[edge.from].include?(edge.to)
     end
 
+    def node(id)
+      @index.keys.find { |node| node.id == id }
+    end
+
+    def nodes
+      @index.keys
+    end
+
     def each_node(&blk)
       @index.each_key(&blk)
     end

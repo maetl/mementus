@@ -42,4 +42,20 @@ describe Mementus::Graph do
     expect(graph.has_edge?(edge)).to be true
     expect(graph.has_edge?(edge2)).to be false
   end
+
+  specify '#node(id)' do
+    graph = Mementus::Graph.new
+    edge = Mementus::Edge.new(Mementus::Node.new(1, :node), Mementus::Node.new(2, :node))
+    graph.add_edge(edge)
+
+    expect(graph.node(1)).to eq(edge.from)
+  end
+
+  specify '#nodes(filter)' do
+    graph = Mementus::Graph.new
+    edge = Mementus::Edge.new(Mementus::Node.new(1, :node), Mementus::Node.new(2, :node))
+    graph.add_edge(edge)
+
+    expect(graph.nodes).to eq([edge.from, edge.to])
+  end
 end
