@@ -1,10 +1,11 @@
 module Mementus
   class Edge
-    attr_reader :from, :to
+    attr_reader :from, :to, :label
 
-    def initialize(from, to)
+    def initialize(from, to, label=:edge)
       @from = from
       @to = to
+      @label = label
     end
 
     def nodes
