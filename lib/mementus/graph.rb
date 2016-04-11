@@ -31,6 +31,12 @@ module Mementus
       add_edge(edge)
     end
 
+    def create_node(&block)
+      node = Node.new
+      yield node
+      add_node(node)
+    end
+
     def add_edge(edge)
       add_node(edge.from)
       add_node(edge.to)

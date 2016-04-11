@@ -16,6 +16,17 @@ describe Mementus::Graph do
     expect(graph.edges_count).to eq(0)
   end
 
+  specify '#create_node' do
+    graph = Mementus::Graph.new
+    graph.create_node do |node|
+      node.id = 1
+      node.label = :vertex
+    end
+
+    expect(graph.nodes_count).to eq(1)
+    expect(graph.edges_count).to eq(0)
+  end
+
   specify '#add_edge' do
     graph = Mementus::Graph.new
     graph.add_edge(Mementus::Edge.new(Mementus::Node.new(1, :node), Mementus::Node.new(2, :node)))
