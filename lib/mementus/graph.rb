@@ -25,6 +25,12 @@ module Mementus
       @index[node] ||= Set.new
     end
 
+    def create_edge(&block)
+      edge = Edge.new
+      yield edge
+      add_edge(edge)
+    end
+
     def add_edge(edge)
       add_node(edge.from)
       add_node(edge.to)
