@@ -3,82 +3,63 @@ require 'set'
 module Mementus
   class Graph
     def initialize(is_directed=true)
-      @index = {}
-      @is_directed = is_directed
+      @structure = Structure.new(is_directed)
     end
 
     def nodes_count
-      @index.size
+      @structure.nodes_count
     end
 
     def edges_count
-      c = 0
-      each_edge { c += 1 }
-      c
+      @structure.edges_count
     end
 
     def directed?
-      @is_directed
+      @structure.directed?
     end
 
     def add_node(node)
-      @index[node] ||= Set.new
+      @structure.add_node(node)
     end
 
     def create_edge(&block)
-      edge = Edge.new
-      yield edge
-      add_edge(edge)
+      @structure.create_edge(&block)
     end
 
     def create_node(&block)
-      node = Node.new
-      yield node
-      add_node(node)
+      @structure.create_node(&block)
     end
 
     def add_edge(edge)
-      add_node(edge.from)
-      add_node(edge.to)
-
-      @index[edge.from].add(edge.to)
-      @index[edge.to].add(edge.from) unless directed?
+      @structure.add_edge(edge)
     end
 
     def has_node?(node)
-      @index.key?(node)
+      @structure.has_node?(node)
     end
 
     def has_edge?(edge)
-      has_node?(edge.from) && @index[edge.from].include?(edge.to)
+      @structure.has_edge?(edge)
     end
 
     def node(id)
-      @index.keys.find { |node| node.id == id }
+      @structure.node(id)
     end
 
     def nodes
-      @index.keys
+      @structure.nodes
     end
 
     def each_node(&blk)
-      @index.each_key(&blk)
+      @structure.each_node(&blk)
     end
 
     def each_adjacent(node, &blk)
-      @index[node].each(&blk)
+      @structure.each_adjacent(node, &blk)
     end
 
     def each_edge(&blk)
-      if directed?
-        each_node do |from|
-          each_adjacent(from) do |to|
-            yield Edge.new(from, to)
-          end
-        end
-      else
-        raise 'Edge traversal unsupported for undirected graphs'
-      end
+      @structure.each_edge(&blk)
     end
   end
 end
