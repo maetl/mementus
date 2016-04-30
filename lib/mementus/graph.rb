@@ -6,6 +6,10 @@ module Mementus
       @structure = Structure.new(is_directed)
     end
 
+    def query
+      Query::Source.new(self)
+    end
+
     def nodes_count
       @structure.nodes_count
     end
