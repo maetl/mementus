@@ -1,15 +1,16 @@
 require 'spec_helper'
 
 describe Mementus::Graph do
-  specify '#new' do
-    graph = Mementus::Graph.new
+  let(:graph) do
+    Mementus::Graph.new
+  end
 
+  specify '#new' do
     expect(graph.nodes_count).to eq(0)
     expect(graph.edges_count).to eq(0)
   end
 
   specify '#add_node' do
-    graph = Mementus::Graph.new
     graph.add_node(Mementus::Node.new(1, :node))
 
     expect(graph.nodes_count).to eq(1)
@@ -17,7 +18,6 @@ describe Mementus::Graph do
   end
 
   specify '#create_node' do
-    graph = Mementus::Graph.new
     graph.create_node do |node|
       node.id = 1
       node.label = :vertex
@@ -28,7 +28,6 @@ describe Mementus::Graph do
   end
 
   specify '#add_edge' do
-    graph = Mementus::Graph.new
     graph.add_edge(Mementus::Edge.new(Mementus::Node.new(1, :node), Mementus::Node.new(2, :node)))
 
     expect(graph.nodes_count).to eq(2)
@@ -36,7 +35,6 @@ describe Mementus::Graph do
   end
 
   specify '#create_edge' do
-    graph = Mementus::Graph.new
     graph.create_edge do |edge|
       edge.label = :relationship
       edge.from = "A"
@@ -48,7 +46,6 @@ describe Mementus::Graph do
   end
 
   specify '#has_node?' do
-    graph = Mementus::Graph.new
     node = Mementus::Node.new(1, :node)
     graph.add_node(node)
 
@@ -57,7 +54,6 @@ describe Mementus::Graph do
   end
 
   specify '#has_edge?' do
-    graph = Mementus::Graph.new
     edge = Mementus::Edge.new(Mementus::Node.new(1, :node), Mementus::Node.new(2, :node))
     edge2 = Mementus::Edge.new(Mementus::Node.new(1, :node), Mementus::Node.new(2, :node))
     graph.add_edge(edge)
@@ -67,7 +63,6 @@ describe Mementus::Graph do
   end
 
   specify '#node(id)' do
-    graph = Mementus::Graph.new
     edge = Mementus::Edge.new(Mementus::Node.new(1, :node), Mementus::Node.new(2, :node))
     graph.add_edge(edge)
 
@@ -75,7 +70,6 @@ describe Mementus::Graph do
   end
 
   specify '#nodes(filter)' do
-    graph = Mementus::Graph.new
     edge = Mementus::Edge.new(Mementus::Node.new(1, :node), Mementus::Node.new(2, :node))
     graph.add_edge(edge)
 
