@@ -1,6 +1,6 @@
 module Mementus
   class Structure
-    def initialize(is_directed)
+    def initialize(is_directed=true)
       @index = {}
       @is_directed = is_directed
     end
