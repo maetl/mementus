@@ -14,10 +14,4 @@ describe Mementus::IntegerId do
     expect(generator.next_id).to eq(101)
     expect(generator.next_id).to eq(102)
   end
-
-  it 'allocates from a global generator' do
-    expect(Mementus::IntegerId.next_id).to eq(1)
-    expect(Mementus::IntegerId.next_id).to eq(2)
-    expect(Mementus::IntegerId.next_id).to eq(3)
-  end
 end
