@@ -36,8 +36,8 @@ module Mementus
     end
 
     def add_edge(edge)
-      add_node(edge.from)
-      add_node(edge.to)
+      add_node(edge.from) unless has_node?(edge.from)
+      add_node(edge.to) unless has_node?(edge.to)
 
       @index[edge.from].add(edge.to)
       @index[edge.to].add(edge.from) unless directed?
