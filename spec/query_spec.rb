@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Mementus::Query do
   let(:graph) do
-    graph = Mementus::Graph.new
-    graph.add_edge(Mementus::Edge.new(Mementus::Node.new(1, :node), Mementus::Node.new(2, :node)))
-    graph
+    Mementus::Graph.new do
+      add_edge(Mementus::Edge.new(Mementus::Node.new(1, :node), Mementus::Node.new(2, :node)))
+    end
   end
 
   specify '#node' do
