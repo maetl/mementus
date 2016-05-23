@@ -6,6 +6,11 @@ module Mementus
       @from = from
       @to = to
       @label = label
+      @id = nil
+    end
+
+    def id=(id)
+      @id = id
     end
 
     def from=(node, label=:node)

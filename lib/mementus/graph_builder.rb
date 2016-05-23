@@ -9,11 +9,15 @@ module Mementus
     end
 
     def create_edge(&block)
-      @structure.create_edge(&block)
+      edge = EdgeBuilder.new
+      yield edge
+      @structure.add_edge(edge)
     end
 
     def create_node(&block)
-      @structure.create_node(&block)
+      node = NodeBuilder.new
+      yield node
+      @structure.add_node(node)
     end
 
     def add_edge(edge)

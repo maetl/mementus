@@ -19,20 +19,8 @@ module Mementus
       @is_directed
     end
 
-    def create_edge(&block)
-      edge = Edge.new
-      yield edge
-      add_edge(edge)
-    end
-
     def add_node(node)
       @index[node] ||= Set.new
-    end
-
-    def create_node(&block)
-      node = Node.new
-      yield node
-      add_node(node)
     end
 
     def add_edge(edge)

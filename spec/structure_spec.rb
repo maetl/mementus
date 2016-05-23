@@ -17,29 +17,8 @@ describe Mementus::Structure do
     expect(structure.edges_count).to eq(0)
   end
 
-  specify '#create_node' do
-    structure.create_node do |node|
-      node.id = 1
-      node.label = :vertex
-    end
-
-    expect(structure.nodes_count).to eq(1)
-    expect(structure.edges_count).to eq(0)
-  end
-
   specify '#add_edge' do
     structure.add_edge(Mementus::Edge.new(Mementus::Node.new(1, :node), Mementus::Node.new(2, :node)))
-
-    expect(structure.nodes_count).to eq(2)
-    expect(structure.edges_count).to eq(1)
-  end
-
-  specify '#create_edge' do
-    structure.create_edge do |edge|
-      edge.label = :relationship
-      edge.from = "A"
-      edge.to = "B"
-    end
 
     expect(structure.nodes_count).to eq(2)
     expect(structure.edges_count).to eq(1)
