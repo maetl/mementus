@@ -42,6 +42,10 @@ module Mementus
       @structure.nodes
     end
 
+    def adjacent(id)
+      @structure.adjacent(id)
+    end
+
     def each_node(&blk)
       @structure.each_node(&blk)
     end

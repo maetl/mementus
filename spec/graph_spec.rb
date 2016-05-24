@@ -1,10 +1,6 @@
 require 'spec_helper'
 
 describe Mementus::Graph do
-  let(:graph) do
-
-  end
-
   specify '#new' do
     graph = Mementus::Graph.new
 
@@ -62,19 +58,15 @@ describe Mementus::Graph do
     end
 
     expect(graph.has_node?(node)).to be true
-    expect(graph.has_node?(node.dup)).to be false
   end
 
   specify '#has_edge?' do
     edge = Mementus::Edge.new(Mementus::Node.new(1, :node), Mementus::Node.new(2, :node))
-    edge2 = Mementus::Edge.new(Mementus::Node.new(1, :node), Mementus::Node.new(2, :node))
-
     graph = Mementus::Graph.new do
       add_edge(edge)
     end
 
     expect(graph.has_edge?(edge)).to be true
-    expect(graph.has_edge?(edge2)).to be false
   end
 
   specify '#node(id)' do
@@ -83,7 +75,7 @@ describe Mementus::Graph do
       add_edge(edge)
     end
 
-    expect(graph.node(1)).to eq(edge.from)
+    expect(graph.node(1).id).to eq(edge.from.id)
   end
 
   specify '#nodes(filter)' do
@@ -92,6 +84,7 @@ describe Mementus::Graph do
       add_edge(edge)
     end
 
-    expect(graph.nodes).to eq([edge.from, edge.to])
+    expect(graph.nodes.first.id).to eq(edge.from.id)
+    expect(graph.nodes.last.id).to eq(edge.to.id)
   end
 end

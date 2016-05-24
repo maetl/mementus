@@ -29,29 +29,27 @@ describe Mementus::Structure do
     structure.add_node(node)
 
     expect(structure.has_node?(node)).to be true
-    expect(structure.has_node?(node.dup)).to be false
   end
 
   specify '#has_edge?' do
     edge = Mementus::Edge.new(Mementus::Node.new(1, :node), Mementus::Node.new(2, :node))
-    edge2 = Mementus::Edge.new(Mementus::Node.new(1, :node), Mementus::Node.new(2, :node))
     structure.add_edge(edge)
 
     expect(structure.has_edge?(edge)).to be true
-    expect(structure.has_edge?(edge2)).to be false
   end
 
   specify '#node(id)' do
     edge = Mementus::Edge.new(Mementus::Node.new(1, :node), Mementus::Node.new(2, :node))
     structure.add_edge(edge)
 
-    expect(structure.node(1)).to eq(edge.from)
+    expect(structure.node(1).id).to eq(edge.from.id)
   end
 
-  specify '#nodes(filter)' do
+  specify '#nodes' do
     edge = Mementus::Edge.new(Mementus::Node.new(1, :node), Mementus::Node.new(2, :node))
     structure.add_edge(edge)
 
-    expect(structure.nodes).to eq([edge.from, edge.to])
+    expect(structure.nodes.first.id).to eq(edge.from.id)
+    expect(structure.nodes.last.id).to eq(edge.to.id)
   end
 end

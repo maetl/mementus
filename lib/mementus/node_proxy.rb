@@ -1,12 +1,12 @@
 module Mementus
   class NodeProxy
-    def initialize(node, graph)
-      @node = node
+    def initialize(id, graph)
+      @id = id
       @graph = graph
     end
 
     def id
-      @node.id
+      @id
     end
 
     def label
@@ -14,7 +14,7 @@ module Mementus
     end
 
     def each_adjacent(&block)
-      @graph.each_adjacent(@node, &block)
+      @graph.each_adjacent(@id, &block)
     end
 
     def adjacent

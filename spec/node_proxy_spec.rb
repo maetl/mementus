@@ -10,7 +10,7 @@ describe Mementus::NodeProxy do
       add_edge(Mementus::Edge.new(node1, node3))
     end
 
-    node_proxy = Mementus::NodeProxy.new(node1, graph)
+    node_proxy = Mementus::NodeProxy.new(1, graph)
     expect(node_proxy.adjacent.map { |node| node.id}).to eq([node2.id, node3.id])
   end
 end

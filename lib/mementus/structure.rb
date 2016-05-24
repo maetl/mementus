@@ -20,45 +20,49 @@ module Mementus
     end
 
     def add_node(node)
-      @index[node] ||= Set.new
+      @index[node.id] ||= Set.new
     end
 
     def add_edge(edge)
       add_node(edge.from) unless has_node?(edge.from)
       add_node(edge.to) unless has_node?(edge.to)
 
-      @index[edge.from].add(edge.to)
-      @index[edge.to].add(edge.from) unless directed?
+      @index[edge.from.id].add(edge.to.id)
+      @index[edge.to.id].add(edge.from.id) unless directed?
     end
 
     def has_node?(node)
-      @index.key?(node)
+      @index.key?(node.id)
     end
 
     def has_edge?(edge)
-      has_node?(edge.from) && @index[edge.from].include?(edge.to)
+      has_node?(edge.from) && @index[edge.from.id].include?(edge.to.id)
     end
 
     def node(id)
-      @index.keys.find { |node| node.id == id }
+      NodeProxy.new(id, self)
     end
 
     def nodes
-      @index.keys
+      @index.keys.map { |id| NodeProxy.new(id, self) }
+    end
+
+    def adjacent(id)
+      @index[id].to_a
     end
 
     def each_node(&blk)
-      @index.each_key(&blk)
+      nodes.each(&blk)
     end
 
-    def each_adjacent(node, &blk)
-      @index[node].each(&blk)
+    def each_adjacent(id, &blk)
+      @index[id].each(&blk)
     end
 
     def each_edge(&blk)
       if directed?
         each_node do |from|
-          each_adjacent(from) do |to|
+          each_adjacent(from.id) do |to|
             yield Edge.new(from, to)
           end
         end
