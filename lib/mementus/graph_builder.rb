@@ -1,7 +1,7 @@
 module Mementus
   class GraphBuilder
     def initialize(is_directed)
-      @structure = Structure.new(is_directed)
+      @structure = Structure::AdjacencyList.new(is_directed)
     end
 
     def add_node(node)

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Mementus::Structure do
   let(:structure) do
-    Mementus::Structure.new
+    Mementus::Structure::AdjacencyList.new
   end
 
   specify '#new' do
