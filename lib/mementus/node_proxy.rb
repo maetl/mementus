@@ -9,10 +9,6 @@ module Mementus
       @id
     end
 
-    def label
-      @node.label
-    end
-
     def each_adjacent(&block)
       @graph.each_adjacent(@id, &block)
     end

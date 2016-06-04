@@ -26,6 +26,10 @@ module Mementus
       @structure.directed?
     end
 
+    def n(id)
+      Processor.new(self, Pipes::Node.new(id))
+    end
+
     def has_node?(node)
       @structure.has_node?(node)
     end
