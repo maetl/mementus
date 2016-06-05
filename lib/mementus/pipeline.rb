@@ -36,7 +36,12 @@ module Mementus
     end
 
     def out
-      append_next(Pipes::Out.new)
+      append_next(Pipes::Outgoing.new)
+      self
+    end
+
+    def in
+      append_next(Pipes::Incoming.new)
       self
     end
   end
@@ -52,11 +57,25 @@ module Mementus
       end
     end
 
-    class Out
+    class Outgoing
       def process(graph, node)
         graph.each_adjacent(node.id).map do |id|
           Mementus::NodeProxy.new(id, graph)
         end
+      end
+    end
+
+    class Incoming
+      def process(graph, node)
+        incoming = []
+
+        graph.each_node do |n|
+          graph.each_adjacent(n.id) do |id|
+            incoming << Mementus::NodeProxy.new(n.id, graph) if id == node.id
+          end
+        end
+
+        incoming
       end
     end
   end

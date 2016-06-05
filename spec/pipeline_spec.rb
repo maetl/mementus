@@ -22,15 +22,21 @@ describe 'pipeline api' do
     end
   end
 
-  it 'starts a traversal from the given node' do
+  it 'traverses from the given node' do
     pipeline = graph.n(1)
     expect(pipeline.id).to eq(1)
     expect(pipeline.one.id).to eq(1)
   end
 
-  it 'traverses to adjacent nodes' do
+  it 'traverses to outgoing nodes' do
     pipeline = graph.n(1).out
     expect(pipeline.all.count).to eq(1)
     expect(pipeline.all.first.id).to eq(2)
+  end
+
+  it 'traverses to incoming nodes' do
+    pipeline = graph.n(2).in
+    expect(pipeline.all.count).to eq(1)
+    expect(pipeline.all.first.id).to eq(1)
   end
 end
