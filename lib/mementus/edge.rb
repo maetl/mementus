@@ -2,29 +2,19 @@ module Mementus
   class Edge
     attr_reader :from, :to, :label
 
-    def initialize(from=nil, to=nil, label=:edge)
-      @from = from
-      @to = to
-      @label = label
-    end
+    def initialize(from, to, label=:edge)
+       @from = if from.is_a?(Integer)
+         Node.new(from)
+       else
+         from
+       end
 
-    def from=(node, label=:node)
-      if node.is_a?(Node)
-        @from = node
-      else
-        @from = Node.new(node, label)
-      end
-    end
+       @to = if to.is_a?(Integer)
+         Node.new(to)
+       else
+         to
+       end
 
-    def to=(node)
-      if node.is_a?(Node)
-        @to = node
-      else
-        @to = Node.new(node, label)
-      end
-    end
-
-    def label=(label)
       @label = label
     end
 
@@ -32,8 +22,14 @@ module Mementus
       [@from, @to]
     end
 
-    def other(node)
-      @from == node ? @to : @from
+    def ==(edge)
+      from.id == edge.from.id && to.id == edge.to.id && label == edge.label
+    end
+
+    alias :eql? :==
+
+    def hash
+      [from.id, to.id].hash
     end
   end
 end
