@@ -49,6 +49,11 @@ module Mementus
       append_next(Pipes::Incoming.new)
       self
     end
+
+    def in_e
+      append_next(Pipes::IncomingEdges.new)
+      self
+    end
   end
 
   module Pipes
@@ -85,6 +90,20 @@ module Mementus
         graph.each_node do |n|
           graph.each_adjacent(n.id) do |id|
             incoming << Mementus::NodeProxy.new(n.id, graph) if id == node.id
+          end
+        end
+
+        incoming
+      end
+    end
+
+    class IncomingEdges
+      def process(graph, node)
+        incoming = []
+
+        graph.each_node do |n|
+          graph.each_adjacent(n.id) do |id|
+            incoming << Mementus::Edge.new(n.id, id)
           end
         end
 

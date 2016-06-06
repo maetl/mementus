@@ -45,4 +45,10 @@ describe 'pipeline api' do
     expect(pipeline.all.count).to eq(1)
     expect(pipeline.all.first.id).to eq(1)
   end
+
+  it 'traverses to incoming edges' do
+    pipeline = graph.n(2).in_e
+    expect(pipeline.all.count).to eq(1)
+    expect(pipeline.all.first.from.id).to eq(1)
+  end
 end
