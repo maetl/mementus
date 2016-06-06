@@ -40,6 +40,11 @@ module Mementus
       self
     end
 
+    def out_e
+      append_next(Pipes::OutgoingEdges.new)
+      self
+    end
+
     def in
       append_next(Pipes::Incoming.new)
       self
@@ -61,6 +66,14 @@ module Mementus
       def process(graph, node)
         graph.each_adjacent(node.id).map do |id|
           Mementus::NodeProxy.new(id, graph)
+        end
+      end
+    end
+
+    class OutgoingEdges
+      def process(graph, node)
+        graph.each_adjacent(node.id).map do |id|
+          Mementus::Edge.new(node, id)
         end
       end
     end
