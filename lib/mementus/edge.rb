@@ -1,6 +1,6 @@
 module Mementus
   class Edge
-    attr_reader :from, :to, :label
+    attr_reader :from, :to, :label, :id
 
     def initialize(from, to, label=:edge)
        @from = if from.is_a?(Integer)
