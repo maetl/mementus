@@ -6,13 +6,5 @@ module Mementus
       @id = id
       @label = label
     end
-
-    def id=(id)
-      @id = id
-    end
-
-    def label=(label)
-      @label = label
-    end
   end
 end
