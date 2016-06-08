@@ -1,11 +1,16 @@
 module Mementus
   module Structure
     class IncidenceList
-      def initialize
+      def initialize(is_directed=true)
         @outgoing = {}
         @incoming = {}
         @nodes = {}
         @edges = {}
+        @is_directed = is_directed
+      end
+
+      def is_directed?
+        @is_directed
       end
 
       def nodes_count
@@ -26,8 +31,8 @@ module Mementus
 
       def add_node(node)
         @nodes[node.id] = node
-        @outgoing[node.id] ||= Set.new
-        @incoming[node.id] ||= Set.new
+        @outgoing[node.id] ||= []
+        @incoming[node.id] ||= []
       end
 
       def add_edge(edge)
@@ -35,12 +40,16 @@ module Mementus
         add_node(edge.to) unless has_node?(edge.to)
 
         @edges["#{edge.from.id},#{edge.to.id}"] = edge
-        @outgoing[edge.from.id].add(edge.to.id)
-        @incoming[edge.to.id].add(edge.from.id)
+        @outgoing[edge.from.id] << edge.to.id
+        @incoming[edge.to.id] << edge.from.id
       end
 
       def node(id)
         NodeProxy.new(id, self)
+      end
+
+      def each_node(&block)
+        @nodes.values.each(&block)
       end
 
       def nodes
@@ -48,7 +57,7 @@ module Mementus
       end
 
       def adjacent(id)
-        @outgoing[id].to_a
+        @outgoing[id]
       end
 
       def each_adjacent(id, &blk)
