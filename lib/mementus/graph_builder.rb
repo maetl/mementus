@@ -2,6 +2,7 @@ module Mementus
   class GraphBuilder
     def initialize(is_directed)
       @structure = Structure::IncidenceList.new(is_directed)
+      @id_provider = IntegerId.new
     end
 
     def add_node(node)
@@ -17,6 +18,7 @@ module Mementus
     def create_node(&block)
       node = NodeBuilder.new
       yield node
+      node.id = @id_provider.next unless node.id
       @structure.add_node(node)
     end
 

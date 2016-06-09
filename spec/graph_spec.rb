@@ -20,13 +20,14 @@ describe Mementus::Graph do
   specify '#create_node' do
     graph = Mementus::Graph.new do
       create_node do |node|
-        node.id = 1
+        node.id = 20
         node.label = :vertex
       end
     end
 
     expect(graph.nodes_count).to eq(1)
     expect(graph.edges_count).to eq(0)
+    expect(graph.node(1).id).to eq(1)
   end
 
   specify '#add_edge' do
@@ -36,6 +37,8 @@ describe Mementus::Graph do
 
     expect(graph.nodes_count).to eq(2)
     expect(graph.edges_count).to eq(1)
+    expect(graph.node(1).id).to eq(1)
+    expect(graph.node(2).id).to eq(2)
   end
 
   specify '#create_edge' do
