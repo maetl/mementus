@@ -13,10 +13,22 @@ describe 'pipeline api' do
         node.label = :passage
       end
 
+      create_node do |node|
+        node.id = 4
+        node.label = :passage
+      end
+
       create_edge do |edge|
         edge.id = 3
         edge.from = 1
         edge.to = 2
+        edge.label = :choice
+      end
+
+      create_edge do |edge|
+        edge.id = 5
+        edge.from = 2
+        edge.to = 4
         edge.label = :choice
       end
     end
@@ -32,6 +44,12 @@ describe 'pipeline api' do
     pipeline = graph.n(1).out
     expect(pipeline.all.count).to eq(1)
     expect(pipeline.all.first.id).to eq(2)
+  end
+
+  it 'traverses to second-degree outgoing nodes' do
+    pipeline = graph.n(1).out.out
+    expect(pipeline.all.count).to eq(1)
+    expect(pipeline.all.first.id).to eq(4)
   end
 
   it 'traverses to outgoing edges' do
