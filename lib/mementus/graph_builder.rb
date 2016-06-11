@@ -2,7 +2,8 @@ module Mementus
   class GraphBuilder
     def initialize(is_directed)
       @structure = Structure::IncidenceList.new(is_directed)
-      @id_provider = IntegerId.new
+      @node_ids = IntegerId.new
+      @edge_ids = IntegerId.new
     end
 
     def add_node(node)
@@ -12,13 +13,14 @@ module Mementus
     def create_edge(&block)
       edge = EdgeBuilder.new
       yield edge
+      edge.id = @edge_ids.next_id unless edge.id
       @structure.add_edge(edge)
     end
 
     def create_node(&block)
       node = NodeBuilder.new
       yield node
-      node.id = @id_provider.next unless node.id
+      node.id = @node_ids.next_id unless node.id
       @structure.add_node(node)
     end
 
