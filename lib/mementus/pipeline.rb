@@ -68,9 +68,15 @@ module Mementus
     end
 
     class Outgoing
-      def process(graph, node)
-        graph.each_adjacent(node.id).map do |id|
-          Mementus::NodeProxy.new(id, graph)
+      def process(graph, source)
+        if source.respond_to?(:id)
+          graph.each_adjacent(source.id).map do |id|
+            Mementus::NodeProxy.new(id, graph)
+          end
+        else
+          source.inject([]) do |result, node|
+            result.concat(node.adjacent)
+          end
         end
       end
     end
@@ -98,12 +104,13 @@ module Mementus
     end
 
     class IncomingEdges
-      def process(graph, node)
+      def process(graph, source)
+        ids = source.respond_to?(:id) ? [source.id] : source.map(&:id)
         incoming = []
 
         graph.each_node do |n|
           graph.each_adjacent(n.id) do |id|
-            incoming << Mementus::Edge.new(n.id, id)
+            incoming << Mementus::Edge.new(n.id, id) if ids.include?(id)
           end
         end
 
