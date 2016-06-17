@@ -1,12 +1,13 @@
 module Mementus
   class EdgeBuilder
-    attr_reader :from, :to, :label, :id
+    attr_reader :id, :from, :to, :label, :props
 
-    def initialize(from=nil, to=nil, label=:edge, id=nil)
-      @from = from
-      @to = to
-      @label = label
-      @id = id
+    def initialize(options={})
+      id = options[:id]
+      from = options[:from]
+      to = options[:to]
+      label = options[:label]
+      props = options[:props]
     end
 
     def id=(id)

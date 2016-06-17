@@ -1,10 +1,11 @@
 module Mementus
   class NodeBuilder
-    attr_reader :id, :label
+    attr_reader :id, :label, :props
 
-    def initialize(id=nil, label=:node)
-      @id = id
-      @label = label
+    def initialize(options={})
+      id = options[:id]
+      label = options[:label]
+      props = options[:props]
     end
 
     def id=(id)
@@ -13,6 +14,10 @@ module Mementus
 
     def label=(label)
       @label = label
+    end
+
+    def props=(props)
+      @props = props
     end
   end
 end
