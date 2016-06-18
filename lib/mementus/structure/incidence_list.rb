@@ -26,7 +26,7 @@ module Mementus
       end
 
       def has_edge?(edge)
-        @edges.key?("#{edge.from.id},#{edge.to.id}")
+        @edges.key?(edge.id)
       end
 
       def add_node(node)
@@ -39,9 +39,13 @@ module Mementus
         add_node(edge.from) unless has_node?(edge.from)
         add_node(edge.to) unless has_node?(edge.to)
 
-        @edges["#{edge.from.id},#{edge.to.id}"] = edge
+        @edges[edge.id] = edge
         @outgoing[edge.from.id] << edge.to.id
         @incoming[edge.to.id] << edge.from.id
+      end
+
+      def edge(id)
+        @edges[id]
       end
 
       def node(id)

@@ -44,6 +44,7 @@ describe Mementus::Graph do
   specify '#create_edge' do
     graph = Mementus::Graph.new do
       create_edge do |edge|
+        edge.id = 123
         edge.label = :relationship
         edge.from = "A"
         edge.to = "B"
@@ -52,6 +53,7 @@ describe Mementus::Graph do
 
     expect(graph.nodes_count).to eq(2)
     expect(graph.edges_count).to eq(1)
+    expect(graph.edge(123).id).to eq(123)
   end
 
   specify '#has_node?' do

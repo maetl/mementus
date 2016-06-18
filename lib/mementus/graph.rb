@@ -42,6 +42,10 @@ module Mementus
       @structure.node(id)
     end
 
+    def edge(id)
+      @structure.edge(id)
+    end
+
     def nodes
       @structure.nodes
     end
