@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Mementus::NodeProxy do
-  specify '#new' do
+  specify '#adjacent' do
     node1 = Mementus::Node.new(1, :node)
     node2 = Mementus::Node.new(2, :node)
     node3 = Mementus::Node.new(3, :node)
