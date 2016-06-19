@@ -4,13 +4,13 @@ module Mementus
 
     def initialize(from, to, label=:edge)
        @from = if from.is_a?(Integer)
-         Node.new(from)
+         Node.new(id: from)
        else
          from
        end
 
        @to = if to.is_a?(Integer)
-         Node.new(to)
+         Node.new(id: to)
        else
          to
        end

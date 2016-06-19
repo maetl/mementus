@@ -11,7 +11,7 @@ describe Mementus::Edge do
   end
 
   it 'should initialize with node instances' do
-    edge = Mementus::Edge.new(Mementus::Node.new(1), Mementus::Node.new(2))
+    edge = Mementus::Edge.new(Mementus::Node.new(id: 1), Mementus::Node.new(id: 2))
 
     expect(edge.from).to be_a(Mementus::Node)
     expect(edge.from.id).to eq(1)

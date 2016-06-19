@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Mementus::NodeProxy do
   specify '#adjacent' do
-    node1 = Mementus::Node.new(1, :node)
-    node2 = Mementus::Node.new(2, :node)
-    node3 = Mementus::Node.new(3, :node)
+    node1 = Mementus::Node.new(id: 1, label: :node)
+    node2 = Mementus::Node.new(id: 2, label: :node)
+    node3 = Mementus::Node.new(id: 3, label: :node)
     graph = Mementus::Graph.new do
       add_edge(Mementus::Edge.new(node1, node2))
       add_edge(Mementus::Edge.new(node1, node3))

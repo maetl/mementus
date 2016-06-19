@@ -10,7 +10,7 @@ describe Mementus::Graph do
 
   specify '#add_node' do
     graph = Mementus::Graph.new do
-      add_node(Mementus::Node.new(1, :node))
+      add_node(Mementus::Node.new(id: 1, label: :node))
     end
 
     expect(graph.nodes_count).to eq(1)
@@ -32,7 +32,7 @@ describe Mementus::Graph do
 
   specify '#add_edge' do
     graph = Mementus::Graph.new do
-      add_edge(Mementus::Edge.new(Mementus::Node.new(1, :node), Mementus::Node.new(2, :node)))
+      add_edge(Mementus::Edge.new(Mementus::Node.new(id: 1, label: :node), Mementus::Node.new(id: 2, label: :node)))
     end
 
     expect(graph.nodes_count).to eq(2)
@@ -57,7 +57,7 @@ describe Mementus::Graph do
   end
 
   specify '#has_node?' do
-    node = Mementus::Node.new(1, :node)
+    node = Mementus::Node.new(id: 1, label: :node)
     graph = Mementus::Graph.new do
       add_node(node)
     end
@@ -66,7 +66,7 @@ describe Mementus::Graph do
   end
 
   specify '#has_edge?' do
-    edge = Mementus::Edge.new(Mementus::Node.new(1, :node), Mementus::Node.new(2, :node))
+    edge = Mementus::Edge.new(Mementus::Node.new(id: 1, label: :node), Mementus::Node.new(id: 2, label: :node))
     graph = Mementus::Graph.new do
       add_edge(edge)
     end
@@ -75,7 +75,7 @@ describe Mementus::Graph do
   end
 
   specify '#node(id)' do
-    edge = Mementus::Edge.new(Mementus::Node.new(1, :node), Mementus::Node.new(2, :node))
+    edge = Mementus::Edge.new(Mementus::Node.new(id: 1, label: :node), Mementus::Node.new(id: 2, label: :node))
     graph = Mementus::Graph.new do
       add_edge(edge)
     end
@@ -84,7 +84,7 @@ describe Mementus::Graph do
   end
 
   specify '#nodes(filter)' do
-    edge = Mementus::Edge.new(Mementus::Node.new(1, :node), Mementus::Node.new(2, :node))
+    edge = Mementus::Edge.new(Mementus::Node.new(id: 1, label: :node), Mementus::Node.new(id: 2, label: :node))
     graph = Mementus::Graph.new do
       add_edge(edge)
     end

@@ -18,7 +18,7 @@ module Mementus
       if node.is_a?(Node)
         @from = node
       else
-        @from = Node.new(node, label)
+        @from = Node.new(id: node, label: label)
       end
     end
 
@@ -26,7 +26,7 @@ module Mementus
       if node.is_a?(Node)
         @to = node
       else
-        @to = Node.new(node, label)
+        @to = Node.new(id: node, label: label)
       end
     end
 
