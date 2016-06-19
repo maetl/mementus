@@ -40,7 +40,7 @@ describe Mementus::Graph do
 
     expect(graph.nodes_count).to eq(1)
     expect(graph.edges_count).to eq(0)
-    expect(graph.node(1).id).to eq(1)
+    expect(graph.node(20).id).to eq(20)
   end
 
   specify '#add_edge' do

@@ -30,7 +30,7 @@ module Mementus
       end
 
       def add_node(node)
-        @nodes[node.id] = node
+        @nodes[node.id] = NodeProxy.new(node, self)
         @outgoing[node.id] ||= []
         @incoming[node.id] ||= []
       end
@@ -49,7 +49,7 @@ module Mementus
       end
 
       def node(id)
-        NodeProxy.new(id, self)
+        @nodes[id]
       end
 
       def each_node(&block)
@@ -57,15 +57,15 @@ module Mementus
       end
 
       def nodes
-        @nodes.keys.map { |id| NodeProxy.new(id, self) }
+        @nodes.values
       end
 
       def adjacent(id)
-        @outgoing[id]
+        @nodes.values_at(*@outgoing[id])
       end
 
       def each_adjacent(id, &blk)
-        @outgoing[id].each(&blk)
+        adjacent(id).each(&blk)
       end
     end
   end

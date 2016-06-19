@@ -41,11 +41,11 @@ module Mementus
       end
 
       def node(id)
-        NodeProxy.new(id, self)
+        NodeProxy.new(Node.new(id: id), self)
       end
 
       def nodes
-        @index.keys.map { |id| NodeProxy.new(id, self) }
+        @index.keys.map { |id| NodeProxy.new(Node.new(id: id), self) }
       end
 
       def adjacent(id)

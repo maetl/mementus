@@ -16,12 +16,12 @@ module Mementus
     def visit(id, &block)
       @queue.concat(@graph.adjacent(id))
 
-      while next_id = @queue.shift
-        next if @visited[next_id]
+      while next_node = @queue.shift
+        next if @visited[next_node]
 
-        @visited[next_id] = true
-        block.call(NodeProxy.new(next_id, @graph))
-        @queue.concat(@graph.adjacent(next_id))
+        @visited[next_node] = true
+        block.call(next_node)
+        @queue.concat(@graph.adjacent(next_node.id))
       end
     end
   end

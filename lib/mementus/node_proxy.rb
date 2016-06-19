@@ -1,22 +1,28 @@
 module Mementus
   class NodeProxy
-    def initialize(id, graph)
-      @id = id
+    def initialize(node, graph)
+      @node = node
       @graph = graph
     end
 
     def id
-      @id
+      @node.id
+    end
+
+    def label
+      @node.label
+    end
+
+    def outgoing
+
     end
 
     def each_adjacent(&block)
-      @graph.each_adjacent(@id, &block)
+      @graph.each_adjacent(@node.id, &block)
     end
 
     def adjacent
-      each_adjacent.to_a.map do |node|
-        self.class.new(node, @graph)
-      end
+      @graph.adjacent(@node.id)
     end
   end
 end

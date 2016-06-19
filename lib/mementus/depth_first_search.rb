@@ -13,12 +13,12 @@ module Mementus
     private
 
     def visit(id, &block)
-      @graph.each_adjacent(id) do |adjacent_id|
-        next if @visited[adjacent_id]
+      @graph.each_adjacent(id) do |adj_node|
+        next if @visited[adj_node.id]
 
-        @visited[adjacent_id] = true
-        block.call(NodeProxy.new(adjacent_id, @graph))
-        visit(adjacent_id, &block)
+        @visited[adj_node.id] = true
+        block.call(adj_node)
+        visit(adj_node.id, &block)
       end
     end
   end

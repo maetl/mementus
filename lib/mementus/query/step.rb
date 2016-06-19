@@ -2,11 +2,12 @@ module Mementus
   module Query
     class Step
       def initialize(traversal, id)
-        @node = NodeProxy.new(id, traversal.graph)
+        @traversal = traversal
+        @id = id
       end
 
       def to_node
-        @node
+        @traversal.graph.node(@id)
       end
     end
   end
