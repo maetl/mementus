@@ -1,6 +1,18 @@
 require 'spec_helper'
 
 describe Mementus::Graph do
+  let(:node_1) do
+    Mementus::Node.new(id: 1)
+  end
+
+  let(:node_2) do
+    Mementus::Node.new(id: 2)
+  end
+
+  let(:edge_1_2) do
+    Mementus::Edge.new(from: node_1, to: node_2)
+  end
+
   specify '#new' do
     graph = Mementus::Graph.new
 
@@ -9,8 +21,9 @@ describe Mementus::Graph do
   end
 
   specify '#add_node' do
+    node = node_1
     graph = Mementus::Graph.new do
-      add_node(Mementus::Node.new(id: 1))
+      add_node(node)
     end
 
     expect(graph.nodes_count).to eq(1)
@@ -31,8 +44,9 @@ describe Mementus::Graph do
   end
 
   specify '#add_edge' do
+    edge = edge_1_2
     graph = Mementus::Graph.new do
-      add_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 1), to: Mementus::Node.new(id: 2)))
+      add_edge(edge)
     end
 
     expect(graph.nodes_count).to eq(2)
@@ -57,39 +71,39 @@ describe Mementus::Graph do
   end
 
   specify '#has_node?' do
-    node = Mementus::Node.new(id: 1)
+    node = node_1
     graph = Mementus::Graph.new do
       add_node(node)
     end
 
-    expect(graph.has_node?(node)).to be true
+    expect(graph.has_node?(node_1)).to be true
   end
 
   specify '#has_edge?' do
-    edge = Mementus::Edge.new(from: Mementus::Node.new(id: 1), to: Mementus::Node.new(id: 2))
+    edge = edge_1_2
     graph = Mementus::Graph.new do
       add_edge(edge)
     end
 
-    expect(graph.has_edge?(edge)).to be true
+    expect(graph.has_edge?(edge_1_2)).to be true
   end
 
   specify '#node(id)' do
-    edge = Mementus::Edge.new(from: Mementus::Node.new(id: 1), to: Mementus::Node.new(id: 2))
+    edge = edge_1_2
     graph = Mementus::Graph.new do
       add_edge(edge)
     end
 
-    expect(graph.node(1).id).to eq(edge.from.id)
+    expect(graph.node(1).id).to eq(edge_1_2.from.id)
   end
 
   specify '#nodes(filter)' do
-    edge = Mementus::Edge.new(from: Mementus::Node.new(id: 1), to: Mementus::Node.new(id: 2))
+    edge = edge_1_2
     graph = Mementus::Graph.new do
       add_edge(edge)
     end
 
-    expect(graph.nodes.first.id).to eq(edge.from.id)
-    expect(graph.nodes.last.id).to eq(edge.to.id)
+    expect(graph.nodes.first.id).to eq(edge_1_2.from.id)
+    expect(graph.nodes.last.id).to eq(edge_1_2.to.id)
   end
 end
