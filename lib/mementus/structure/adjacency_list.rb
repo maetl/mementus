@@ -64,7 +64,7 @@ module Mementus
         if directed?
           each_node do |from|
             each_adjacent(from.id) do |to|
-              yield Edge.new(from, to)
+              yield Edge.new(from: from, to: to)
             end
           end
         else

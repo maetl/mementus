@@ -84,7 +84,7 @@ module Mementus
     class OutgoingEdges
       def process(graph, node)
         graph.each_adjacent(node.id).map do |id|
-          Mementus::Edge.new(node, id)
+          Mementus::Edge.new(from: node, to: id)
         end
       end
     end
@@ -110,7 +110,7 @@ module Mementus
 
         graph.each_node do |n|
           graph.each_adjacent(n.id) do |id|
-            incoming << Mementus::Edge.new(n.id, id) if ids.include?(id)
+            incoming << Mementus::Edge.new(from: n.id, to: id) if ids.include?(id)
           end
         end
 

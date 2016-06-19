@@ -6,8 +6,8 @@ describe Mementus::NodeProxy do
     node2 = Mementus::Node.new(id: 2, label: :node)
     node3 = Mementus::Node.new(id: 3, label: :node)
     graph = Mementus::Graph.new do
-      add_edge(Mementus::Edge.new(node1, node2))
-      add_edge(Mementus::Edge.new(node1, node3))
+      add_edge(Mementus::Edge.new(from: node1, to: node2))
+      add_edge(Mementus::Edge.new(from: node1, to: node3))
     end
 
     node_proxy = Mementus::NodeProxy.new(1, graph)
