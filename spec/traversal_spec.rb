@@ -3,13 +3,13 @@ require 'spec_helper'
 describe 'Basic graph traversals' do
   let(:graph) do
     Mementus::Graph.new do
-      add_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 1, label: :node), to: Mementus::Node.new(id: 2, label: :node)))
-      add_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 2, label: :node), to: Mementus::Node.new(id: 3, label: :node)))
-      add_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 2, label: :node), to: Mementus::Node.new(id: 5, label: :node)))
-      add_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 1, label: :node), to: Mementus::Node.new(id: 6, label: :node)))
-      add_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 2, label: :node), to: Mementus::Node.new(id: 7, label: :node)))
-      add_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 7, label: :node), to: Mementus::Node.new(id: 8, label: :node)))
-      add_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 5, label: :node), to: Mementus::Node.new(id: 9, label: :node)))
+      add_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 1), to: Mementus::Node.new(id: 2)))
+      add_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 2), to: Mementus::Node.new(id: 3)))
+      add_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 2), to: Mementus::Node.new(id: 5)))
+      add_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 1), to: Mementus::Node.new(id: 6)))
+      add_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 2), to: Mementus::Node.new(id: 7)))
+      add_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 7), to: Mementus::Node.new(id: 8)))
+      add_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 5), to: Mementus::Node.new(id: 9)))
     end
   end
 

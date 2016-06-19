@@ -13,7 +13,7 @@ shared_examples_for "a mutable graph data structure" do
 
   describe '#add_node' do
     it 'adds a node object to the graph' do
-      structure.add_node(Mementus::Node.new(id: 1, label: :node))
+      structure.add_node(Mementus::Node.new(id: 1))
 
       expect(structure.nodes_count).to eq(1)
       expect(structure.edges_count).to eq(0)
@@ -22,7 +22,7 @@ shared_examples_for "a mutable graph data structure" do
 
   describe '#add_edge' do
     it 'adds an edge object to the graph' do
-      structure.add_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 1, label: :node), to: Mementus::Node.new(id: 2, label: :node)))
+      structure.add_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 1), to: Mementus::Node.new(id: 2)))
 
       expect(structure.nodes_count).to eq(2)
       expect(structure.edges_count).to eq(1)
@@ -31,7 +31,7 @@ shared_examples_for "a mutable graph data structure" do
 
   describe '#has_node?' do
     it 'tests for the presence of a given node' do
-      node = Mementus::Node.new(id: 1, label: :node)
+      node = Mementus::Node.new(id: 1)
       structure.add_node(node)
 
       expect(structure.has_node?(node)).to be true
@@ -40,7 +40,7 @@ shared_examples_for "a mutable graph data structure" do
 
   describe '#has_edge?' do
     it 'tests for the presence of a given edge' do
-      edge = Mementus::Edge.new(from: Mementus::Node.new(id: 1, label: :node), to: Mementus::Node.new(id: 2, label: :node))
+      edge = Mementus::Edge.new(from: Mementus::Node.new(id: 1), to: Mementus::Node.new(id: 2))
       structure.add_edge(edge)
 
       expect(structure.has_edge?(edge)).to be true
@@ -49,7 +49,7 @@ shared_examples_for "a mutable graph data structure" do
 
   describe '#node(id)' do
     it 'finds a node by id' do
-      edge = Mementus::Edge.new(from: Mementus::Node.new(id: 1, label: :node), to: Mementus::Node.new(id: 2, label: :node))
+      edge = Mementus::Edge.new(from: Mementus::Node.new(id: 1), to: Mementus::Node.new(id: 2))
       structure.add_edge(edge)
 
       expect(structure.node(1).id).to eq(edge.from.id)
@@ -58,7 +58,7 @@ shared_examples_for "a mutable graph data structure" do
 
   describe '#nodes' do
     it 'lists all nodes in the graph' do
-      edge = Mementus::Edge.new(from: Mementus::Node.new(id: 1, label: :node), to: Mementus::Node.new(id: 2, label: :node))
+      edge = Mementus::Edge.new(from: Mementus::Node.new(id: 1), to: Mementus::Node.new(id: 2))
       structure.add_edge(edge)
 
       expect(structure.nodes.first.id).to eq(edge.from.id)

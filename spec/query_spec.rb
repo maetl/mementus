@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Mementus::Query do
   let(:graph) do
     Mementus::Graph.new do
-      add_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 1, label: :node),to: Mementus::Node.new(id: 2, label: :node)))
+      add_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 1),to: Mementus::Node.new(id: 2)))
     end
   end
 
