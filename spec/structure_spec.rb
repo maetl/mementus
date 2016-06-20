@@ -11,8 +11,8 @@ shared_examples_for "a mutable graph data structure" do
     end
   end
 
-  describe '#add_node' do
-    it 'adds a node object to the graph' do
+  describe '#set_node' do
+    it 'assigns a node object to the graph' do
       structure.set_node(Mementus::Node.new(id: 1))
 
       expect(structure.nodes_count).to eq(1)
@@ -20,7 +20,7 @@ shared_examples_for "a mutable graph data structure" do
     end
   end
 
-  describe '#add_edge' do
+  describe '#set_edge' do
     it 'adds an edge object to the graph' do
       structure.set_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 1), to: Mementus::Node.new(id: 2)))
 

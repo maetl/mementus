@@ -6,11 +6,11 @@ module Mementus
       @edge_ids = IntegerId.new
     end
 
-    def add_node(node)
+    def set_node(node)
       @structure.set_node(node)
     end
 
-    def add_edge(edge)
+    def set_edge(edge)
       @structure.set_edge(edge)
     end
 
@@ -18,14 +18,14 @@ module Mementus
       builder = NodeBuilder.new
       yield builder
       builder.id = @node_ids.next_id unless builder.id
-      add_node(builder.to_node)
+      set_node(builder.to_node)
     end
 
     def create_edge(&block)
       builder = EdgeBuilder.new
       yield builder
       builder.id = @edge_ids.next_id unless builder.id
-      add_edge(builder.to_edge)
+      set_edge(builder.to_edge)
     end
 
     def graph
