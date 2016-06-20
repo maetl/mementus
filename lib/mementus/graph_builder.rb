@@ -15,10 +15,12 @@ module Mementus
     end
 
     def add_node(id: nil, label: nil)
+      id = @node_ids.next_id unless id
       @structure.set_node(Node.new(id: id, label: label))
     end
 
     def add_edge(id: nil, from: nil, to: nil, label: nil)
+      id = @edge_ids.next_id unless id
       @structure.set_edge(Edge.new(id: id, from: from, to: to, label: label))
     end
 

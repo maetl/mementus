@@ -27,6 +27,14 @@ describe Mementus::Graph do
     expect(graph.node(1).id).to eq(1)
   end
 
+  specify '#add_node -> with auto id' do
+    graph = Mementus::Graph.new do
+      add_node
+    end
+
+    expect(graph.node(1).id).to eq(1)
+  end
+
   specify '#create_node' do
     graph = Mementus::Graph.new do
       create_node do |node|
@@ -60,6 +68,15 @@ describe Mementus::Graph do
     expect(graph.edges_count).to eq(1)
     expect(graph.node(1).id).to eq(1)
     expect(graph.node(2).id).to eq(2)
+    expect(graph.edge(3).id).to eq(3)
+  end
+
+  specify '#add_edge -> with auto id' do
+    graph = Mementus::Graph.new do
+      add_edge(from: 1, to: 2)
+    end
+
+    expect(graph.edge(1).id).to eq(1)
   end
 
   specify '#create_edge' do
