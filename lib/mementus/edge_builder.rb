@@ -1,18 +1,8 @@
 module Mementus
   class EdgeBuilder
-    attr_reader :id, :from, :to, :label, :props
+    include ElementBuilder
 
-    def initialize(options={})
-      id = options[:id]
-      from = options[:from]
-      to = options[:to]
-      label = options[:label]
-      props = options[:props]
-    end
-
-    def id=(id)
-      @id = id
-    end
+    attr_reader :from, :to
 
     def from=(node, label=:node)
       if node.is_a?(Node)
@@ -30,16 +20,8 @@ module Mementus
       end
     end
 
-    def label=(label)
-      @label = label
-    end
-
-    def nodes
-      [@from, @to]
-    end
-
-    def other(node)
-      @from == node ? @to : @from
+    def to_edge
+      Edge.new(id: id, from: from, to: to, label: label)
     end
   end
 end

@@ -11,17 +11,17 @@ module Mementus
     end
 
     def create_edge(&block)
-      edge = EdgeBuilder.new
-      yield edge
-      edge.id = @edge_ids.next_id unless edge.id
-      @structure.add_edge(edge)
+      builder = EdgeBuilder.new
+      yield builder
+      builder.id = @edge_ids.next_id unless builder.id
+      @structure.add_edge(builder.to_edge)
     end
 
     def create_node(&block)
-      node = NodeBuilder.new
-      yield node
-      node.id = @node_ids.next_id unless node.id
-      @structure.add_node(node)
+      builder = NodeBuilder.new
+      yield builder
+      builder.id = @node_ids.next_id unless builder.id
+      @structure.add_node(builder.to_node)
     end
 
     def add_edge(edge)
