@@ -20,13 +20,13 @@ module Mementus
         @is_directed
       end
 
-      def add_node(node)
+      def set_node(node)
         @index[node.id] ||= Set.new
       end
 
-      def add_edge(edge)
-        add_node(edge.from) unless has_node?(edge.from)
-        add_node(edge.to) unless has_node?(edge.to)
+      def set_edge(edge)
+        set_node(edge.from) unless has_node?(edge.from)
+        set_node(edge.to) unless has_node?(edge.to)
 
         @index[edge.from.id].add(edge.to.id)
         @index[edge.to.id].add(edge.from.id) unless directed?

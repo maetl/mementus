@@ -29,15 +29,15 @@ module Mementus
         @edges.key?(edge.id)
       end
 
-      def add_node(node)
+      def set_node(node)
         @nodes[node.id] = NodeProxy.new(node, self)
         @outgoing[node.id] ||= []
         @incoming[node.id] ||= []
       end
 
-      def add_edge(edge)
-        add_node(edge.from) unless has_node?(edge.from)
-        add_node(edge.to) unless has_node?(edge.to)
+      def set_edge(edge)
+        set_node(edge.from) unless has_node?(edge.from)
+        set_node(edge.to) unless has_node?(edge.to)
 
         @edges[edge.id] = edge
         @outgoing[edge.from.id] << edge.to.id
