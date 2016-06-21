@@ -87,6 +87,14 @@ describe Mementus::Graph do
     expect(graph.edge(1).id).to eq(1)
   end
 
+  specify '#add_edge -> with props' do
+    graph = Mementus::Graph.new do
+      add_edge(from: 1, to: 2, props: { title: 'Relationship' })
+    end
+
+    expect(graph.edge(1).props[:title]).to eq('Relationship')
+  end
+
   specify '#create_edge' do
     graph = Mementus::Graph.new do
       create_edge do |edge|

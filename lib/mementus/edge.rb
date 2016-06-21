@@ -1,10 +1,11 @@
 module Mementus
   class Edge
-    attr_reader :from, :to, :label, :id
+    attr_reader :from, :to, :label, :id, :props
 
-    def initialize(id: nil, from:, to:, label: :edge)
+    def initialize(id: nil, from:, to:, label: :edge, props: {})
       @id = id
       @label = label
+      @props = props.freeze
 
       @from = if from.is_a?(Integer)
         Node.new(id: from)

@@ -25,6 +25,24 @@ describe Mementus::Edge do
     expect(edge.label).to eq(:relationship)
   end
 
+  it 'returns nil when missing prop is accessed' do
+    edge = Mementus::Edge.new(from: 1, to: 2)
+
+    expect(edge.props[:title]).to be_nil
+  end
+
+  it 'initializes with props given' do
+    edge = Mementus::Edge.new(from: 1, to: 2, props: { :title => 'Relationship' })
+
+    expect(edge.props[:title]).to eq('Relationship')
+  end
+
+  it 'does not allow mutation of props' do
+    node = Mementus::Edge.new(from: 1, to: 2, props: { title: 'Relationship' })
+
+    expect { node.props[:title] = 'Edge' }.to raise_error(RuntimeError)
+  end
+
   it 'should test equality based on value' do
     edge1 = Mementus::Edge.new(from: 1, to: 2, label: :relationship)
     edge2 = Mementus::Edge.new(from: 1, to: 2, label: :relationship)
