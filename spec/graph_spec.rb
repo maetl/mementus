@@ -35,6 +35,14 @@ describe Mementus::Graph do
     expect(graph.node(1).id).to eq(1)
   end
 
+  specify '#add_node -> with props' do
+    graph = Mementus::Graph.new do
+      add_node(props: { title: 'Vertex' })
+    end
+
+    expect(graph.node(1).props[:title]).to eq('Vertex')
+  end
+
   specify '#create_node' do
     graph = Mementus::Graph.new do
       create_node do |node|

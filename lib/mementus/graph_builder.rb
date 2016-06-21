@@ -14,9 +14,9 @@ module Mementus
       @structure.set_edge(edge)
     end
 
-    def add_node(id: nil, label: nil)
+    def add_node(id: nil, label: nil, props: {})
       id = @node_ids.next_id unless id
-      @structure.set_node(Node.new(id: id, label: label))
+      @structure.set_node(Node.new(id: id, label: label, props: props))
     end
 
     def add_edge(id: nil, from: nil, to: nil, label: nil)

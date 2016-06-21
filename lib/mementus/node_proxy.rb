@@ -13,8 +13,8 @@ module Mementus
       @node.label
     end
 
-    def outgoing
-
+    def props
+      @node.props
     end
 
     def each_adjacent(&block)
