@@ -48,12 +48,18 @@ describe Mementus::Graph do
       create_node do |node|
         node.id = 20
         node.label = :vertex
+        node.props[:title] = 'Vertex'
       end
     end
 
     expect(graph.nodes_count).to eq(1)
     expect(graph.edges_count).to eq(0)
-    expect(graph.node(20).id).to eq(20)
+
+    graph.node(20).tap do |node|
+      expect(node.id).to eq(20)
+      expect(node.label).to eq(:vertex)
+      expect(node.props[:title]).to eq('Vertex')
+    end
   end
 
   specify '#set_edge' do
@@ -100,14 +106,21 @@ describe Mementus::Graph do
       create_edge do |edge|
         edge.id = 123
         edge.label = :relationship
-        edge.from = "A"
-        edge.to = "B"
+        edge.from = 'A'
+        edge.to = 'B'
+        edge.props[:name] = 'Relationship'
       end
     end
 
     expect(graph.nodes_count).to eq(2)
     expect(graph.edges_count).to eq(1)
-    expect(graph.edge(123).id).to eq(123)
+    graph.edge(123).tap do |edge|
+      expect(edge.id).to eq(123)
+      expect(edge.label).to eq(:relationship)
+      expect(edge.from.id).to eq('A')
+      expect(edge.to.id).to eq('B')
+      expect(edge.props[:name]).to eq('Relationship')
+    end
   end
 
   specify '#has_node?' do

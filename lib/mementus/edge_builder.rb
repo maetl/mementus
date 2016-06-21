@@ -21,7 +21,7 @@ module Mementus
     end
 
     def to_edge
-      Edge.new(id: id, from: from, to: to, label: label)
+      Edge.new(id: id, from: from, to: to, label: label, props: props)
     end
   end
 end
