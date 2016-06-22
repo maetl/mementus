@@ -123,6 +123,18 @@ describe Mementus::Graph do
     end
   end
 
+  specify '#create_edge -> with props' do
+    graph = Mementus::Graph.new do
+      create_edge do |edge|
+        edge.from = 'A'
+        edge.to = 'B'
+        edge.props = {
+          name: 'Relationship'
+        }
+      end
+    end
+  end
+
   specify '#has_node?' do
     graph = Mementus::Graph.new do
       set_node(node_1)
