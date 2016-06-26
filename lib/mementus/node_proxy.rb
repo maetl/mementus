@@ -13,8 +13,8 @@ module Mementus
       @node.label
     end
 
-    def props
-      @node.props
+    def [](prop)
+      @node[prop]
     end
 
     def each_adjacent(&block)

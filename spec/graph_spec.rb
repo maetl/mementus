@@ -40,7 +40,7 @@ describe Mementus::Graph do
       add_node(props: { title: 'Vertex' })
     end
 
-    expect(graph.node(1).props[:title]).to eq('Vertex')
+    expect(graph.node(1)[:title]).to eq('Vertex')
   end
 
   specify '#create_node' do
@@ -58,7 +58,7 @@ describe Mementus::Graph do
     graph.node(20).tap do |node|
       expect(node.id).to eq(20)
       expect(node.label).to eq(:vertex)
-      expect(node.props[:title]).to eq('Vertex')
+      expect(node[:title]).to eq('Vertex')
     end
   end
 
@@ -98,7 +98,7 @@ describe Mementus::Graph do
       add_edge(from: 1, to: 2, props: { title: 'Relationship' })
     end
 
-    expect(graph.edge(1).props[:title]).to eq('Relationship')
+    expect(graph.edge(1)[:title]).to eq('Relationship')
   end
 
   specify '#create_edge' do
@@ -119,7 +119,7 @@ describe Mementus::Graph do
       expect(edge.label).to eq(:relationship)
       expect(edge.from.id).to eq('A')
       expect(edge.to.id).to eq('B')
-      expect(edge.props[:name]).to eq('Relationship')
+      expect(edge[:name]).to eq('Relationship')
     end
   end
 

@@ -1,6 +1,6 @@
 module Mementus
   class Edge
-    attr_reader :from, :to, :label, :id, :props
+    attr_reader :from, :to, :label, :id
 
     def initialize(id: nil, from:, to:, label: :edge, props: {})
       @id = id
@@ -18,6 +18,10 @@ module Mementus
       else
         to
       end
+    end
+
+    def [](prop)
+      @props[prop]
     end
 
     def nodes
