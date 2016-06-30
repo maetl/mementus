@@ -41,4 +41,17 @@ describe Mementus::Pipeline::Step do
       expect(step.take(2)).to eq([:a, :b])
     end
   end
+
+  describe '#new' do
+    it 'treats steps as enumerable sources to other steps' do
+      step = Mementus::Pipeline::Step.new(Mementus::Pipeline::Step.new([:a, :b, :c]))
+      expect(step.all).to eq([:a, :b, :c])
+    end
+
+    it 'processes output values based on the given pipe' do
+      pipe = -> (value) { Fiber.yield(value.to_s.upcase) }
+      step = Mementus::Pipeline::Step.new([:a, :b, :c], pipe)
+      expect(step.all).to eq(['A', 'B', 'C'])
+    end
+  end
 end
