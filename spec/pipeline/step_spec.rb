@@ -48,10 +48,24 @@ describe Mementus::Pipeline::Step do
       expect(step.all).to eq([:a, :b, :c])
     end
 
-    it 'processes output values based on the given pipe' do
-      pipe = -> (value) { Fiber.yield(value.to_s.upcase) }
-      step = Mementus::Pipeline::Step.new([:a, :b, :c], pipe)
+    it 'transforms output values based on the given pipe' do
+      transform = -> (value) { Fiber.yield(value.to_s.upcase) }
+      step = Mementus::Pipeline::Step.new([:a, :b, :c], transform)
       expect(step.all).to eq(['A', 'B', 'C'])
+    end
+
+    it 'filters output values based on the given pipe' do
+      filter = -> (value) { Fiber.yield(value) if value == :a }
+      step = Mementus::Pipeline::Step.new([:a, :b, :c], filter)
+      expect(step.all).to eq([:a])
+    end
+
+    it 'transforms and filters output values based on the given pipes' do
+      filter = -> (value) { Fiber.yield(value) if value == :a }
+      transform = -> (value) { Fiber.yield(value.to_s.upcase) }
+      prev = Mementus::Pipeline::Step.new([:a, :b, :c], filter)
+      step = Mementus::Pipeline::Step.new(prev, transform)
+      expect(step.all).to eq(['A'])
     end
   end
 end
