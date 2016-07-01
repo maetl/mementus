@@ -24,17 +24,18 @@ module Mementus
     #
     # The approach here is roughly similar to the way that Ruby chains together
     # `Enumerator::Lazy` objects.
-    #
-    # @param source [Enumerable]
-    # @param pipe [#call]
     class Step
+      # Initialize a pipeline step from the given source.
+      #
+      # @param source [#each]
+      # @param pipe [#call]
       def initialize(source, pipe=Pipe.new)
-        @context = Fiber.new do
-          source.each do |element|
-            pipe.call(element)
-          end
-        end
+        @source = source
+        @pipe = pipe
       end
+
+      attr_reader :source, :pipe
+      private :source, :pipe
 
       # Loop through each value in the sequence, yielding control to the next
       # step if necessary.
@@ -44,19 +45,22 @@ module Mementus
       def each
         return to_enum unless block_given?
 
-        loop do
-          element = @context.resume
-          if @context.alive?
-            yield element
-          else
-            return
+        context = Fiber.new do
+          source.each do |element|
+            pipe.call(element)
           end
+
+          raise StopIteration
+        end
+
+        loop do
+          yield context.resume
         end
       end
 
       # Returns the first element in the sequence.
       def first
-        to_enum.next
+        to_enum.first
       end
 
       # Returns all values in the sequence

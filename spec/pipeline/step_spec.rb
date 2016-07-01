@@ -19,6 +19,12 @@ describe Mementus::Pipeline::Step do
       enum = Mementus::Pipeline::Step.new([]).each
       expect { enum.next }.to raise_error(StopIteration)
     end
+
+    it 'creates an isolated iteration context with each enumerator' do
+      step = Mementus::Pipeline::Step.new([:a, :b, :c])
+      expect(step.to_enum.next).to eq(:a)
+      expect(step.to_enum.next).to eq(:a)
+    end
   end
 
   describe '#first' do
