@@ -58,7 +58,7 @@ module Mementus
         end
       end
 
-      # Returns the first element in the sequence.
+      # Returns the first value in the sequence.
       def first
         to_enum.first
       end
