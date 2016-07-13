@@ -10,10 +10,6 @@ module Mementus
       @structure = builder.graph
     end
 
-    def query
-      Query::Source.new(self)
-    end
-
     def nodes_count
       @structure.nodes_count
     end
