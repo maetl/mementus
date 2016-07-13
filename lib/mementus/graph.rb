@@ -27,7 +27,7 @@ module Mementus
     end
 
     def n(id)
-      Processor.new(self, Pipes::Node.new(id))
+      Pipeline::Step.new([node(id)], Pipeline::Pipe.new, self)
     end
 
     def has_node?(node)

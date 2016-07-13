@@ -29,13 +29,14 @@ module Mementus
       #
       # @param source [#each]
       # @param pipe [#call]
-      def initialize(source, pipe=Pipe.new)
+      def initialize(source, pipe=Pipe.new, graph=nil)
         @source = source
         @pipe = pipe
+        @graph = graph
       end
 
-      attr_reader :source, :pipe
-      private :source, :pipe
+      attr_reader :source, :pipe, :graph
+      private :source, :pipe, :graph
 
       # Loop through each value in the sequence, yielding control to the next
       # step if necessary.
@@ -56,6 +57,64 @@ module Mementus
         loop do
           yield context.resume
         end
+      end
+
+      # Dereference ids from the source elements.
+      def id
+        ids = to_enum.map { |element| element.id }
+        return ids.first if ids.length == 1
+        ids
+      end
+
+      # Traverse to the outgoing nodes adjacent to the source elements.
+      def out
+        outgoing_nodes = source.inject([]) do |result, node|
+          result.concat(node.adjacent)
+        end
+
+        Step.new(outgoing_nodes)
+      end
+
+      # Traverse to the incoming nodes pointing to the source elements.
+      def in
+        incoming_nodes = []
+
+        source.each do |node|
+          graph.each_node do |graph_node|
+            graph.each_adjacent(graph_node.id) do |adj_node|
+              incoming_nodes << graph_node if adj_node.id == node.id
+            end
+          end
+        end
+
+        Step.new(incoming_nodes)
+      end
+
+      # Traverse to the outgoing edges from the source elements.
+      def out_e
+        outgoing_edges = []
+
+        source.each do |node|
+          outgoing_edges = graph.each_adjacent(node.id).map do |id|
+            Mementus::Edge.new(from: node, to: id)
+          end
+        end
+
+        Step.new(outgoing_edges)
+      end
+
+      # Traverse to the incoming edges pointing to the source elements.
+      def in_e
+        ids = source.map(&:id)
+        incoming_edges = []
+
+        graph.each_node do |graph_node|
+          graph.each_adjacent(graph_node.id) do |adj_node|
+            incoming_edges << Mementus::Edge.new(from: graph_node, to: adj_node) if ids.include?(adj_node.id)
+          end
+        end
+
+        Step.new(incoming_edges)
       end
 
       # Returns the first value in the sequence.

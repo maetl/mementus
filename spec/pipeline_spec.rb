@@ -37,7 +37,7 @@ describe 'pipeline api' do
   it 'traverses from the given node' do
     pipeline = graph.n(1)
     expect(pipeline.id).to eq(1)
-    expect(pipeline.one.id).to eq(1)
+    expect(pipeline.first.id).to eq(1)
   end
 
   it 'traverses to outgoing nodes' do
