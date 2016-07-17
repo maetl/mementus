@@ -50,6 +50,10 @@ module Mementus
       @structure.adjacent(id)
     end
 
+    def adjacent_edges(id)
+      @structure.adjacent_edges(id)
+    end
+
     def each_node(&blk)
       @structure.each_node(&blk)
     end

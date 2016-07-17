@@ -4,6 +4,8 @@ module Mementus
       def initialize(is_directed=true)
         @outgoing = {}
         @incoming = {}
+        @outgoing_e = {}
+        @incoming_e = {}
         @nodes = {}
         @edges = {}
         @is_directed = is_directed
@@ -33,6 +35,8 @@ module Mementus
         @nodes[node.id] = NodeProxy.new(node, self)
         @outgoing[node.id] ||= []
         @incoming[node.id] ||= []
+        @outgoing_e[node.id] ||= []
+        @incoming_e[node.id] ||= []
       end
 
       def set_edge(edge)
@@ -42,6 +46,8 @@ module Mementus
         @edges[edge.id] = edge
         @outgoing[edge.from.id] << edge.to.id
         @incoming[edge.to.id] << edge.from.id
+        @outgoing_e[edge.from.id] << edge.id
+        @incoming_e[edge.to.id] << edge.id
       end
 
       def edge(id)
@@ -66,6 +72,10 @@ module Mementus
 
       def each_adjacent(id, &blk)
         adjacent(id).each(&blk)
+      end
+
+      def adjacent_edges(id)
+        @edges.values_at(*@outgoing_e[id])
       end
     end
   end
