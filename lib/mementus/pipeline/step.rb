@@ -1,14 +1,5 @@
-require 'fiber'
-
 module Mementus
   module Pipeline
-    class Pipe
-      # Basic passthrough.
-      def call(element)
-        Fiber.yield(element)
-      end
-    end
-
     # Represents a step in a pipeline chain.
     #
     # New steps are constructed from a `source` enumerable (usually the previous
@@ -28,10 +19,10 @@ module Mementus
       # Initialize a pipeline step from the given source.
       #
       # @param source [#each]
-      # @param pipe [#call]
-      def initialize(source, pipe=Pipe.new, graph=nil)
+      # @param pipe [Mementus::Pipeline::Pipe]
+      def initialize(source, pipe=nil, graph=nil)
         @source = source
-        @pipe = pipe
+        @pipe = pipe || Pipe.new(graph)
         @graph = graph
       end
 

@@ -23,7 +23,7 @@ module Mementus
     end
 
     def n(id)
-      Pipeline::Step.new([node(id)], Pipeline::Pipe.new, self)
+      Pipeline::Step.new([node(id)], Pipeline::Pipe.new(self), self)
     end
 
     def has_node?(node)

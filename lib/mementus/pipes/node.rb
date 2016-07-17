@@ -1,12 +1,9 @@
 module Mementus
   module Pipes
-    class Node
-      def initialize(id)
-        @id = id
-      end
-
-      def process(graph, id)
-        graph.node(id || @id)
+    class Node < Pipeline::Transform
+      def process(id)
+        #@graph.node(id)
+        puts id
       end
     end
   end
