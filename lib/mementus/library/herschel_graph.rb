@@ -1,22 +1,22 @@
-# The Herschel graph is a bipartite undirected graph with 11 vertices and
-# 18 edges, the smallest non-Hamiltonian polyhedral graph.
-#
-#         __________(blue-1)__________
-#        /          /      \          \
-#       /          /        \          \
-#      /       (red-1)    (red-2)       \
-#     /         /  \        /  \         \
-#    /         /    \      /    \         \
-# (red-3)--(blue-2) (blue-3) (blue-4)---(red-4)
-#    \         \    /      \    /         /
-#     \         \  /        \  /         /
-#      \       (red-5)    (red-6)       /
-#       \          \        /          /
-#        \          \      /          /
-#         \_________(blue-5)_________/
-#
 module Mementus
   module Library
+    # The Herschel graph is a bipartite undirected graph with 11 vertices and
+    # 18 edges, the smallest non-Hamiltonian polyhedral graph.
+    #
+    #         __________(blue-1)__________
+    #        /          /      \          \
+    #       /          /        \          \
+    #      /       (red-1)    (red-2)       \
+    #     /         /  \        /  \         \
+    #    /         /    \      /    \         \
+    # (red-3)--(blue-2) (blue-3) (blue-4)---(red-4)
+    #    \         \    /      \    /         /
+    #     \         \  /        \  /         /
+    #      \       (red-5)    (red-6)       /
+    #       \          \        /          /
+    #        \          \      /          /
+    #         \_________(blue-5)_________/
+    #
     class HerschelGraph < Graph
       def self.instance
         self.new do
