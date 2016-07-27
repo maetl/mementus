@@ -26,10 +26,16 @@ describe Mementus::Node do
     expect(node[:title]).to be_nil
   end
 
-  it 'initializes with props hash' do
+  it 'initializes with props keys' do
     node = Mementus::Node.new(props: { title: 'Vertex' })
 
     expect(node[:title]).to eq('Vertex')
+  end
+
+  it 'initializes with props hash' do
+    node = Mementus::Node.new(props: { title: 'Vertex', count: 10 })
+
+    expect(node.props).to eq({ title: 'Vertex', count: 10 })
   end
 
   it 'does not allow mutation of props' do

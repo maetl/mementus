@@ -17,6 +17,10 @@ module Mementus
       @node[prop]
     end
 
+    def props
+      @node.props
+    end
+
     def out_e
       Pipeline::Step.new(adjacent_edges, Pipeline::Pipe.new(@graph), @graph)
     end
