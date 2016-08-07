@@ -81,4 +81,16 @@ describe Mementus::Structure::IncidenceList do
   end
 
   it_behaves_like "a mutable graph data structure"
+
+  describe '#nodes(match)' do
+    it 'matches all nodes with the given prop' do
+      structure.set_node(Mementus::Node.new(id: 1, props: { tag: 'item'}))
+      structure.set_node(Mementus::Node.new(id: 2, props: { tag: 'item'}))
+      structure.set_node(Mementus::Node.new(id: 3))
+
+      items = structure.nodes(tag: 'item')
+      expect(items.first.id).to eq(1)
+      expect(items.last.id).to eq(2)
+    end
+  end
 end

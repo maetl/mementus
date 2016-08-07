@@ -62,8 +62,14 @@ module Mementus
         @nodes.values.each(&block)
       end
 
-      def nodes
-        @nodes.values
+      def nodes(match=nil)
+        return @nodes.values unless match
+
+        @nodes.values.select do |node|
+          key = match.first.first
+          val = match.first.last
+          node[key] == val
+        end
       end
 
       def adjacent(id)

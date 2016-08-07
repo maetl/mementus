@@ -22,8 +22,14 @@ module Mementus
       @structure.directed?
     end
 
-    def n(id)
-      Pipeline::Step.new([node(id)], Pipeline::Pipe.new(self), self)
+    def n(match)
+      if match.is_a?(Hash)
+        source = nodes(match)
+      else
+        source = [node(match)]
+      end
+
+      Pipeline::Step.new(source, Pipeline::Pipe.new(self), self)
     end
 
     def has_node?(node)
@@ -42,8 +48,8 @@ module Mementus
       @structure.edge(id)
     end
 
-    def nodes
-      @structure.nodes
+    def nodes(match=nil)
+      @structure.nodes(match)
     end
 
     def adjacent(id)

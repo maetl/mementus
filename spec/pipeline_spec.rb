@@ -6,16 +6,19 @@ describe 'pipeline api' do
       create_node do |node|
         node.id = 1
         node.label = :passage
+        node.props[:name] = 'one'
       end
 
       create_node do |node|
         node.id = 2
         node.label = :passage
+        node.props[:name] = 'two'
       end
 
       create_node do |node|
         node.id = 4
         node.label = :passage
+        node.props[:name] = 'three'
       end
 
       create_edge do |edge|
@@ -34,8 +37,14 @@ describe 'pipeline api' do
     end
   end
 
-  it 'traverses from the given node' do
+  it 'traverses from the given node id' do
     pipeline = graph.n(1)
+    expect(pipeline.id).to eq(1)
+    expect(pipeline.first.id).to eq(1)
+  end
+
+  it 'traverses from the given node match' do
+    pipeline = graph.n(name: 'one')
     expect(pipeline.id).to eq(1)
     expect(pipeline.first.id).to eq(1)
   end
