@@ -72,6 +72,16 @@ module Mementus
         end
       end
 
+      def edges(match=nil)
+        return @edges.values unless match
+
+        @edges.values.select do |edge|
+          key = match.first.first
+          val = match.first.last
+          edge[key] == val
+        end
+      end
+
       def adjacent(id)
         @nodes.values_at(*@outgoing[id])
       end
