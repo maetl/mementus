@@ -86,7 +86,7 @@ module Mementus
         outgoing_edges = []
 
         source.each do |node|
-          outgoing_edges.concat(graph.adjacent_edges(node.id))
+          outgoing_edges.concat(graph.adjacent_edges(node.id, match))
         end
 
         Step.new(outgoing_edges)

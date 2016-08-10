@@ -114,8 +114,20 @@ module Mementus
         adjacent(id).each(&blk)
       end
 
-      def adjacent_edges(id)
-        @edges.values_at(*@outgoing_e[id])
+      def adjacent_edges(id, match=nil)
+        return @edges.values_at(*@outgoing_e[id]) unless match
+
+        if match.is_a?(Hash)
+          @edges.values_at(*@outgoing_e[id]).select do |edge|
+            key = match.first.first
+            val = match.first.last
+            edge[key] == val
+          end
+        elsif match.is_a?(Symbol)
+          @edges.values_at(*@outgoing_e[id]).select do |edge|
+            edge.label == match
+          end
+        end
       end
     end
   end

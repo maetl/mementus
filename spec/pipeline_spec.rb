@@ -79,6 +79,12 @@ describe 'pipeline api' do
     expect(pipeline.all.first.to.id).to eq(2)
   end
 
+  it 'traverses to outgoing edges matching filter' do
+    pipeline = graph.n(1).out_e(:choice)
+    expect(pipeline.all.count).to eq(1)
+    expect(pipeline.all.first.to.id).to eq(2)
+  end
+
   it 'traverses to incoming nodes' do
     pipeline = graph.n(2).in
     expect(pipeline.all.count).to eq(1)

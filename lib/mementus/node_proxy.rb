@@ -33,8 +33,8 @@ module Mementus
       @graph.adjacent(@node.id, match)
     end
 
-    def adjacent_edges
-      @graph.adjacent_edges(@node.id)
+    def adjacent_edges(match=nil)
+      @graph.adjacent_edges(@node.id, match)
     end
   end
 end
