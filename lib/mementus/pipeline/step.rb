@@ -82,13 +82,11 @@ module Mementus
       end
 
       # Traverse to the outgoing edges from the source elements.
-      def out_e
+      def out_e(match=nil)
         outgoing_edges = []
 
         source.each do |node|
-          outgoing_edges = graph.each_adjacent(node.id).map do |id|
-            Mementus::Edge.new(from: node, to: id)
-          end
+          outgoing_edges.concat(graph.adjacent_edges(node.id))
         end
 
         Step.new(outgoing_edges)
