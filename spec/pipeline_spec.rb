@@ -49,6 +49,12 @@ describe 'pipeline api' do
     expect(pipeline.first.id).to eq(1)
   end
 
+  it 'traverses from the given label match' do
+    pipeline = graph.n(:passage)
+    expect(pipeline.id).to eq([1, 2, 4])
+    expect(pipeline.first.id).to eq(1)
+  end
+
   it 'traverses to outgoing nodes' do
     pipeline = graph.n(1).out
     expect(pipeline.all.count).to eq(1)

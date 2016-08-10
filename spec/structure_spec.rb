@@ -88,9 +88,21 @@ describe Mementus::Structure::IncidenceList do
       structure.set_node(Mementus::Node.new(id: 2, props: { tag: 'point'}))
       structure.set_node(Mementus::Node.new(id: 3))
 
-      matched = structure.nodes(tag: 'point')
-      expect(matched.first.id).to eq(1)
-      expect(matched.last.id).to eq(2)
+      structure.nodes(tag: 'point').tap do |matched|
+        expect(matched.first.id).to eq(1)
+        expect(matched.last.id).to eq(2)
+      end
+    end
+
+    it 'matches all nodes with the given label' do
+      structure.set_node(Mementus::Node.new(id: 1, label: :point))
+      structure.set_node(Mementus::Node.new(id: 2, label: :point))
+      structure.set_node(Mementus::Node.new(id: 3))
+
+      structure.nodes(:point).tap do |matched|
+        expect(matched.first.id).to eq(1)
+        expect(matched.last.id).to eq(2)
+      end
     end
   end
 

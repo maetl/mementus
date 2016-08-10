@@ -23,7 +23,7 @@ module Mementus
     end
 
     def n(match)
-      if match.is_a?(Hash)
+      if match.is_a?(Hash) || match.is_a?(Symbol)
         source = nodes(match)
       else
         source = [node(match)]

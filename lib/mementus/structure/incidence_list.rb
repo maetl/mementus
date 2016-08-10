@@ -65,10 +65,16 @@ module Mementus
       def nodes(match=nil)
         return @nodes.values unless match
 
-        @nodes.values.select do |node|
-          key = match.first.first
-          val = match.first.last
-          node[key] == val
+        if match.is_a?(Hash)
+          @nodes.values.select do |node|
+            key = match.first.first
+            val = match.first.last
+            node[key] == val
+          end
+        elsif match.is_a?(Symbol)
+          @nodes.values.select do |node|
+            node.label == match
+          end
         end
       end
 
