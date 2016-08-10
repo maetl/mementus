@@ -111,22 +111,35 @@ describe Mementus::Structure::IncidenceList do
       edge = Mementus::Edge.new(id: 3, from: Mementus::Node.new(id: 1), to: Mementus::Node.new(id: 2))
       structure.set_edge(edge)
 
-      matched = structure.edges
-      expect(matched.first.id).to eq(edge.id)
-      expect(matched.first.from.id).to eq(edge.from.id)
-      expect(matched.first.to.id).to eq(edge.to.id)
+      structure.edges.tap do |matched|
+        expect(matched.first.id).to eq(edge.id)
+        expect(matched.first.from.id).to eq(edge.from.id)
+        expect(matched.first.to.id).to eq(edge.to.id)
+      end
     end
   end
 
   describe '#edges(match)' do
-    it 'lists all edges with the given prop' do
+    it 'matches all edges with the given prop' do
       edge = Mementus::Edge.new(props: { tag: 'link' }, from: Mementus::Node.new(id: 1), to: Mementus::Node.new(id: 2))
       structure.set_edge(edge)
 
-      matched = structure.edges(tag: 'link')
-      expect(matched.first.id).to eq(edge.id)
-      expect(matched.first.from.id).to eq(edge.from.id)
-      expect(matched.first.to.id).to eq(edge.to.id)
+      structure.edges(tag: 'link').tap do |matched|
+        expect(matched.first.id).to eq(edge.id)
+        expect(matched.first.from.id).to eq(edge.from.id)
+        expect(matched.first.to.id).to eq(edge.to.id)
+      end
+    end
+
+    it 'matches all edges with the given label' do
+      edge = Mementus::Edge.new(label: :link, from: Mementus::Node.new(id: 1), to: Mementus::Node.new(id: 2))
+      structure.set_edge(edge)
+
+      structure.edges(:link).tap do |matched|
+        expect(matched.first.id).to eq(edge.id)
+        expect(matched.first.from.id).to eq(edge.from.id)
+        expect(matched.first.to.id).to eq(edge.to.id)
+      end
     end
   end
 end

@@ -81,10 +81,16 @@ module Mementus
       def edges(match=nil)
         return @edges.values unless match
 
-        @edges.values.select do |edge|
-          key = match.first.first
-          val = match.first.last
-          edge[key] == val
+        if match.is_a?(Hash)
+          @edges.values.select do |edge|
+            key = match.first.first
+            val = match.first.last
+            edge[key] == val
+          end
+        elsif match.is_a?(Symbol)
+          @edges.values.select do |edge|
+            edge.label == match
+          end
         end
       end
 
