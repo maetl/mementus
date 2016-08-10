@@ -29,8 +29,8 @@ module Mementus
       @graph.each_adjacent(@node.id, &block)
     end
 
-    def adjacent
-      @graph.adjacent(@node.id)
+    def adjacent(match=nil)
+      @graph.adjacent(@node.id, match)
     end
 
     def adjacent_edges

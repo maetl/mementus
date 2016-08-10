@@ -58,9 +58,9 @@ module Mementus
       end
 
       # Traverse to the outgoing nodes adjacent to the source elements.
-      def out
+      def out(match=nil)
         outgoing_nodes = source.inject([]) do |result, node|
-          result.concat(node.adjacent)
+          result.concat(node.adjacent(match))
         end
 
         Step.new(outgoing_nodes)

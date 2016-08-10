@@ -94,8 +94,20 @@ module Mementus
         end
       end
 
-      def adjacent(id)
-        @nodes.values_at(*@outgoing[id])
+      def adjacent(id, match=nil)
+        return @nodes.values_at(*@outgoing[id]) unless match
+
+        if match.is_a?(Hash)
+          @nodes.values_at(*@outgoing[id]).select do |node|
+            key = match.first.first
+            val = match.first.last
+            node[key] == val
+          end
+        elsif match.is_a?(Symbol)
+          @nodes.values_at(*@outgoing[id]).select do |node|
+            node.label == match
+          end
+        end
       end
 
       def each_adjacent(id, &blk)
