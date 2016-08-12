@@ -43,7 +43,7 @@ module Mementus
         set_node(edge.from) unless has_node?(edge.from)
         set_node(edge.to) unless has_node?(edge.to)
 
-        @edges[edge.id] = edge
+        @edges[edge.id] = EdgeProxy.new(edge, self)
         @outgoing[edge.from.id] << edge.to.id
         @incoming[edge.to.id] << edge.from.id
         @outgoing_e[edge.from.id] << edge.id
