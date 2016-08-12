@@ -67,15 +67,9 @@ module Mementus
       end
 
       # Traverse to the incoming nodes pointing to the source elements.
-      def in
-        incoming_nodes = []
-
-        source.each do |node|
-          graph.each_node do |graph_node|
-            graph.each_adjacent(graph_node.id) do |adj_node|
-              incoming_nodes << graph_node if adj_node.id == node.id
-            end
-          end
+      def in(match=nil)
+        incoming_nodes = source.inject([]) do |result, node|
+          result.concat(node.incoming(match))
         end
 
         Step.new(incoming_nodes)
@@ -83,24 +77,17 @@ module Mementus
 
       # Traverse to the outgoing edges from the source elements.
       def out_e(match=nil)
-        outgoing_edges = []
-
-        source.each do |node|
-          outgoing_edges.concat(graph.adjacent_edges(node.id, match))
+        outgoing_edges = source.inject([]) do |result, node|
+          result.concat(graph.adjacent_edges(node.id, match))
         end
 
         Step.new(outgoing_edges)
       end
 
       # Traverse to the incoming edges pointing to the source elements.
-      def in_e
-        ids = source.map(&:id)
-        incoming_edges = []
-
-        graph.each_node do |graph_node|
-          graph.each_adjacent(graph_node.id) do |adj_node|
-            incoming_edges << Mementus::Edge.new(from: graph_node, to: adj_node) if ids.include?(adj_node.id)
-          end
+      def in_e(match=nil)
+        incoming_edges = source.inject([]) do |result, node|
+          result.concat(graph.incoming_edges(node.id, match))
         end
 
         Step.new(incoming_edges)

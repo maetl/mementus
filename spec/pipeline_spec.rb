@@ -26,6 +26,7 @@ describe 'pipeline api' do
         edge.from = 1
         edge.to = 2
         edge.label = :choice
+        edge.props[:name] = 'e3'
       end
 
       create_edge do |edge|
@@ -33,6 +34,7 @@ describe 'pipeline api' do
         edge.from = 2
         edge.to = 4
         edge.label = :choice
+        edge.props[:name] = 'e5'
       end
     end
   end
@@ -91,8 +93,32 @@ describe 'pipeline api' do
     expect(pipeline.all.first.id).to eq(1)
   end
 
+  it 'traverses to incoming nodes matching label' do
+    pipeline = graph.n(2).in(:passage)
+    expect(pipeline.all.count).to eq(1)
+    expect(pipeline.all.first.id).to eq(1)
+  end
+
+  it 'traverses to incoming nodes matching filter' do
+    pipeline = graph.n(2).in(name: 'one')
+    expect(pipeline.all.count).to eq(1)
+    expect(pipeline.all.first.id).to eq(1)
+  end
+
   it 'traverses to incoming edges' do
     pipeline = graph.n(2).in_e
+    expect(pipeline.all.count).to eq(1)
+    expect(pipeline.all.first.from.id).to eq(1)
+  end
+
+  it 'traverses to incoming edges matching label' do
+    pipeline = graph.n(2).in_e(:choice)
+    expect(pipeline.all.count).to eq(1)
+    expect(pipeline.all.first.from.id).to eq(1)
+  end
+
+  it 'traverses to incoming edges matching filter' do
+    pipeline = graph.n(2).in_e(name: 'e3')
     expect(pipeline.all.count).to eq(1)
     expect(pipeline.all.first.from.id).to eq(1)
   end

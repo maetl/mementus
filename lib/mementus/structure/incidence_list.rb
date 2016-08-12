@@ -110,6 +110,22 @@ module Mementus
         end
       end
 
+      def incoming(id, match=nil)
+        return @nodes.values_at(*@incoming[id]) unless match
+
+        if match.is_a?(Hash)
+          @nodes.values_at(*@incoming[id]).select do |node|
+            key = match.first.first
+            val = match.first.last
+            node[key] == val
+          end
+        elsif match.is_a?(Symbol)
+          @nodes.values_at(*@incoming[id]).select do |node|
+            node.label == match
+          end
+        end
+      end
+
       def each_adjacent(id, &blk)
         adjacent(id).each(&blk)
       end
@@ -125,6 +141,22 @@ module Mementus
           end
         elsif match.is_a?(Symbol)
           @edges.values_at(*@outgoing_e[id]).select do |edge|
+            edge.label == match
+          end
+        end
+      end
+
+      def incoming_edges(id, match=nil)
+        return @edges.values_at(*@incoming_e[id]) unless match
+
+        if match.is_a?(Hash)
+          @edges.values_at(*@incoming_e[id]).select do |edge|
+            key = match.first.first
+            val = match.first.last
+            edge[key] == val
+          end
+        elsif match.is_a?(Symbol)
+          @edges.values_at(*@incoming_e[id]).select do |edge|
             edge.label == match
           end
         end
