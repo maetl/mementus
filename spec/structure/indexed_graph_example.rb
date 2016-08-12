@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-shared_examples_for "a mutable graph data structure" do
+shared_examples_for "an indexed graph data structure" do
   describe '#new' do
     it 'starts with empty node list' do
       expect(structure.nodes_count).to eq(0)
