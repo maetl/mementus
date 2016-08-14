@@ -94,72 +94,66 @@ module Mementus
         end
       end
 
-      def adjacent(id, match=nil)
-        return @nodes.values_at(*@outgoing[id]) unless match
+      def adjacent(id, match=nil, direction=:out)
+        directional_index = case direction
+        when :out then @outgoing
+        when :in then @incoming
+        end
+
+        return @nodes.values_at(*directional_index[id]) unless match
 
         if match.is_a?(Hash)
-          @nodes.values_at(*@outgoing[id]).select do |node|
+          @nodes.values_at(*directional_index[id]).select do |node|
             key = match.first.first
             val = match.first.last
             node[key] == val
           end
         elsif match.is_a?(Symbol)
-          @nodes.values_at(*@outgoing[id]).select do |node|
+          @nodes.values_at(*directional_index[id]).select do |node|
             node.label == match
           end
         end
       end
 
-      def incoming(id, match=nil)
-        return @nodes.values_at(*@incoming[id]) unless match
+      def outgoing(id, match=nil)
+        adjacent(id, match, :out)
+      end
 
-        if match.is_a?(Hash)
-          @nodes.values_at(*@incoming[id]).select do |node|
-            key = match.first.first
-            val = match.first.last
-            node[key] == val
-          end
-        elsif match.is_a?(Symbol)
-          @nodes.values_at(*@incoming[id]).select do |node|
-            node.label == match
-          end
-        end
+      def incoming(id, match=nil)
+        adjacent(id, match, :in)
       end
 
       def each_adjacent(id, &blk)
         adjacent(id).each(&blk)
       end
 
-      def adjacent_edges(id, match=nil)
-        return @edges.values_at(*@outgoing_e[id]) unless match
+      def adjacent_edges(id, match=nil, direction=:out)
+        directional_index = case direction
+        when :out then @outgoing_e
+        when :in then @incoming_e
+        end
+
+        return @edges.values_at(*directional_index[id]) unless match
 
         if match.is_a?(Hash)
-          @edges.values_at(*@outgoing_e[id]).select do |edge|
+          @edges.values_at(*directional_index[id]).select do |edge|
             key = match.first.first
             val = match.first.last
             edge[key] == val
           end
         elsif match.is_a?(Symbol)
-          @edges.values_at(*@outgoing_e[id]).select do |edge|
+          @edges.values_at(*directional_index[id]).select do |edge|
             edge.label == match
           end
         end
       end
 
-      def incoming_edges(id, match=nil)
-        return @edges.values_at(*@incoming_e[id]) unless match
+      def outgoing_edges(id, match=nil)
+        adjacent_edges(id, match, :out)
+      end
 
-        if match.is_a?(Hash)
-          @edges.values_at(*@incoming_e[id]).select do |edge|
-            key = match.first.first
-            val = match.first.last
-            edge[key] == val
-          end
-        elsif match.is_a?(Symbol)
-          @edges.values_at(*@incoming_e[id]).select do |edge|
-            edge.label == match
-          end
-        end
+      def incoming_edges(id, match=nil)
+        adjacent_edges(id, match, :in)
       end
     end
   end
