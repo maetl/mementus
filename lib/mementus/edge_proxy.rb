@@ -22,11 +22,11 @@ module Mementus
     end
 
     def from
-      @edge.from
+      @graph.node(@edge.from.id)
     end
 
     def to
-      @edge.to
+      @graph.node(@edge.to.id)
     end
   end
 end
