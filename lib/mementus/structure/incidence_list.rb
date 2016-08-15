@@ -58,10 +58,6 @@ module Mementus
         @nodes[id]
       end
 
-      def each_node(&block)
-        @nodes.values.each(&block)
-      end
-
       def nodes(match=nil)
         return @nodes.values unless match
 
@@ -121,10 +117,6 @@ module Mementus
 
       def incoming(id, match=nil)
         adjacent(id, match, :in)
-      end
-
-      def each_adjacent(id, &blk)
-        adjacent(id).each(&blk)
       end
 
       def adjacent_edges(id, match=nil, direction=:out)

@@ -13,7 +13,7 @@ module Mementus
     private
 
     def visit(id, &block)
-      @graph.each_adjacent(id) do |adj_node|
+      @graph.adjacent(id).each do |adj_node|
         next if @visited[adj_node.id]
 
         @visited[adj_node.id] = true

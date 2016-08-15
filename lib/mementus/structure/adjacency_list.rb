@@ -52,19 +52,11 @@ module Mementus
         @index[id].to_a
       end
 
-      def each_node(&blk)
-        nodes.each(&blk)
-      end
-
-      def each_adjacent(id, &blk)
-        @index[id].each(&blk)
-      end
-
       def each_edge(&blk)
         if directed?
-          each_node do |from|
-            each_adjacent(from.id) do |to|
-              yield Edge.new(from: from, to: to)
+          nodes.each do |from|
+            adjacent(from.id).each do |to|
+              yield EdgeProxy.new(Edge.new(from: from, to: to), self)
             end
           end
         else

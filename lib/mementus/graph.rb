@@ -72,10 +72,6 @@ module Mementus
       @structure.each_node(&blk)
     end
 
-    def each_adjacent(node, &blk)
-      @structure.each_adjacent(node, &blk)
-    end
-
     def each_edge(&blk)
       @structure.each_edge(&blk)
     end
