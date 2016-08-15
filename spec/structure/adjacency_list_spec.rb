@@ -5,5 +5,5 @@ describe Mementus::Structure::AdjacencyList do
     Mementus::Structure::AdjacencyList.new
   end
 
-  it_behaves_like "an indexed graph data structure"
+  it_behaves_like 'an indexed graph data structure'
 end
