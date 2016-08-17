@@ -21,6 +21,14 @@ module Mementus
       @node.props
     end
 
+    def out
+      Pipeline::Step.new([self], Pipeline::Pipe.new(@graph), @graph).out_e
+    end
+
+    def out_e
+      Pipeline::Step.new([self], Pipeline::Pipe.new(@graph), @graph).out_e
+    end
+
     def each_adjacent(&block)
       @graph.each_adjacent(@node.id, &block)
     end
