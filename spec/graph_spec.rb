@@ -140,7 +140,7 @@ describe Mementus::Graph do
       set_node(node_1)
     end
 
-    expect(graph.has_node?(node_1)).to be true
+    expect(graph.has_node?(node_1.id)).to be true
   end
 
   specify '#has_edge?' do

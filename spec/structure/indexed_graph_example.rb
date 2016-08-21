@@ -34,7 +34,7 @@ shared_examples_for "an indexed graph data structure" do
       node = Mementus::Node.new(id: 1)
       structure.set_node(node)
 
-      expect(structure.has_node?(node)).to be true
+      expect(structure.has_node?(1)).to be true
     end
   end
 

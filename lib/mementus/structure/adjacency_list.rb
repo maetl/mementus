@@ -25,19 +25,23 @@ module Mementus
       end
 
       def set_edge(edge)
-        set_node(edge.from) unless has_node?(edge.from)
-        set_node(edge.to) unless has_node?(edge.to)
+        set_node(edge.from) unless has_node?(edge.from.id)
+        set_node(edge.to) unless has_node?(edge.to.id)
 
         @index[edge.from.id].add(edge.to.id)
         @index[edge.to.id].add(edge.from.id) unless directed?
       end
 
       def has_node?(node)
-        @index.key?(node.id)
+        if node.is_a?(Mementus::Node) || node.is_a?(Mementus::NodeProxy)
+          @index.key?(node.id)
+        else
+          @index.key?(node)
+        end
       end
 
       def has_edge?(edge)
-        has_node?(edge.from) && @index[edge.from.id].include?(edge.to.id)
+        has_node?(edge.from.id) && @index[edge.from.id].include?(edge.to.id)
       end
 
       def node(id)

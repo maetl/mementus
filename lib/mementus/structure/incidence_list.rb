@@ -24,7 +24,11 @@ module Mementus
       end
 
       def has_node?(node)
-        @nodes.key?(node.id)
+        if node.is_a?(Mementus::Node) || node.is_a?(Mementus::NodeProxy)
+          @nodes.key?(node.id)
+        else
+          @nodes.key?(node)
+        end
       end
 
       def has_edge?(edge)
@@ -40,8 +44,8 @@ module Mementus
       end
 
       def set_edge(edge)
-        set_node(edge.from) unless has_node?(edge.from)
-        set_node(edge.to) unless has_node?(edge.to)
+        set_node(edge.from) unless has_node?(edge.from.id)
+        set_node(edge.to) unless has_node?(edge.to.id)
 
         @edges[edge.id] = EdgeProxy.new(edge, self)
         @outgoing[edge.from.id] << edge.to.id
