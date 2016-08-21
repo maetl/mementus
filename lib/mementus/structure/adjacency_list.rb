@@ -41,7 +41,11 @@ module Mementus
       end
 
       def has_edge?(edge)
-        has_node?(edge.from.id) && @index[edge.from.id].include?(edge.to.id)
+        if edge.is_a?(Mementus::Edge) || edge.is_a?(Mementus::EdgeProxy)
+          has_node?(edge.from.id) && @index[edge.from.id].include?(edge.to.id)
+        else
+          raise 'Edge IDs are not supported by this data structure'
+        end
       end
 
       def node(id)

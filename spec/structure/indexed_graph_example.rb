@@ -30,7 +30,14 @@ shared_examples_for "an indexed graph data structure" do
   end
 
   describe '#has_node?' do
-    it 'tests for the presence of a given node' do
+    it 'tests for the presence of a given node by value' do
+      node = Mementus::Node.new(id: 1)
+      structure.set_node(node)
+
+      expect(structure.has_node?(node)).to be true
+    end
+
+    it 'tests for the presence of a given node by id' do
       node = Mementus::Node.new(id: 1)
       structure.set_node(node)
 
@@ -39,7 +46,7 @@ shared_examples_for "an indexed graph data structure" do
   end
 
   describe '#has_edge?' do
-    it 'tests for the presence of a given edge' do
+    it 'tests for the presence of a given edge by value' do
       edge = Mementus::Edge.new(from: Mementus::Node.new(id: 1), to: Mementus::Node.new(id: 2))
       structure.set_edge(edge)
 
