@@ -33,16 +33,17 @@ module Mementus
       @graph.each_adjacent(@node.id, &block)
     end
 
-    def adjacent(match=nil)
-      @graph.adjacent(@node.id, match)
+    def outgoing(match=nil)
+      @graph.outgoing(@node.id, match)
     end
 
     def incoming(match=nil)
       @graph.incoming(@node.id, match)
     end
 
-    def adjacent_edges(match=nil)
-      @graph.adjacent_edges(@node.id, match)
+    # TODO: Fix
+    def outgoing_edges(match=nil)
+      @graph.outgoing_edges(@node.id, match)
     end
   end
 end

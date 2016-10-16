@@ -14,14 +14,14 @@ module Mementus
     private
 
     def visit(id, &block)
-      @queue.concat(@graph.adjacent(id))
+      @queue.concat(@graph.outgoing(id))
 
       while next_node = @queue.shift
         next if @visited[next_node]
 
         @visited[next_node] = true
         block.call(next_node)
-        @queue.concat(@graph.adjacent(next_node.id))
+        @queue.concat(@graph.outgoing(next_node.id))
       end
     end
   end

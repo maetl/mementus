@@ -29,6 +29,7 @@ module Mementus
             edge.from = "start"
             edge.to = "happy-ending"
             edge.props[:text] = "Choose wisely."
+            edge.props[:happiness] = 1
           end
 
           create_edge do |edge|
@@ -37,6 +38,7 @@ module Mementus
             edge.from = "start"
             edge.to = "tragic-ending"
             edge.props[:text] = "Choose poorly."
+            edge.props[:happiness] = -1
           end
         end
       end

@@ -123,7 +123,7 @@ module Mementus
         adjacent(id, match, :in)
       end
 
-      def adjacent_edges(id, match=nil, direction=:out)
+      def incident_edges(id, match=nil, direction=:out)
         directional_index = case direction
         when :out then @outgoing_e
         when :in then @incoming_e
@@ -145,11 +145,11 @@ module Mementus
       end
 
       def outgoing_edges(id, match=nil)
-        adjacent_edges(id, match, :out)
+        incident_edges(id, match, :out)
       end
 
       def incoming_edges(id, match=nil)
-        adjacent_edges(id, match, :in)
+        incident_edges(id, match, :in)
       end
     end
   end

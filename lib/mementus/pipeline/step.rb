@@ -60,7 +60,7 @@ module Mementus
       # Traverse to the outgoing nodes adjacent to the source elements.
       def out(match=nil)
         outgoing_nodes = source.inject([]) do |result, node|
-          result.concat(node.adjacent(match))
+          result.concat(node.outgoing(match))
         end
 
         Step.new(outgoing_nodes)
@@ -78,7 +78,7 @@ module Mementus
       # Traverse to the outgoing edges from the source elements.
       def out_e(match=nil)
         outgoing_edges = source.inject([]) do |result, node|
-          result.concat(graph.adjacent_edges(node.id, match))
+          result.concat(graph.outgoing_edges(node.id, match))
         end
 
         Step.new(outgoing_edges)
