@@ -5,7 +5,7 @@ module Mementus
     def initialize(is_directed=true, &block)
       builder = GraphBuilder.new(is_directed)
 
-      builder.instance_eval(&block) if block_given?
+      BindingDelegator.new(builder, block.binding).instance_eval(&block) if block_given?
 
       @structure = builder.graph
     end
