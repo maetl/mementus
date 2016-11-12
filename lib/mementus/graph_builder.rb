@@ -8,20 +8,22 @@ module Mementus
 
     def set_node(node)
       @structure.set_node(node)
+      node
     end
 
     def set_edge(edge)
       @structure.set_edge(edge)
+      edge
     end
 
     def add_node(id: nil, label: nil, props: {})
       id = @node_ids.next_id unless id
-      @structure.set_node(Node.new(id: id, label: label, props: props))
+      set_node(Node.new(id: id, label: label, props: props))
     end
 
     def add_edge(id: nil, from: nil, to: nil, label: nil, props: {})
       id = @edge_ids.next_id unless id
-      @structure.set_edge(Edge.new(id: id, from: from, to: to, label: label, props: props))
+      set_edge(Edge.new(id: id, from: from, to: to, label: label, props: props))
     end
 
     def create_node(&block)
