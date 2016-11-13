@@ -52,6 +52,10 @@ module Mementus
       @structure.nodes(match)
     end
 
+    def edges(match=nil)
+      @structure.edges(match)
+    end
+
     def outgoing(id, match=nil)
       @structure.adjacent(id, match)
     end

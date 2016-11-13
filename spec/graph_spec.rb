@@ -159,12 +159,51 @@ describe Mementus::Graph do
     expect(graph.node(1).id).to eq(edge_1_2.from.id)
   end
 
-  specify '#nodes(filter)' do
+  specify '#edge(id)' do
+    graph = Mementus::Graph.new do
+      add_edge(id: 1, from: 1, to: 2)
+    end
+
+    expect(graph.edge(1).from.id).to eq(1)
+    expect(graph.edge(1).to.id).to eq(2)
+  end
+
+  specify '#nodes' do
     graph = Mementus::Graph.new do
       set_edge(edge_1_2)
     end
 
     expect(graph.nodes.first.id).to eq(edge_1_2.from.id)
     expect(graph.nodes.last.id).to eq(edge_1_2.to.id)
+  end
+
+  specify '#nodes(filter)' do
+    graph = Mementus::Graph.new do
+      set_edge(edge_1_2)
+      add_node(id: 3, label: :checked)
+      add_node(id: 4, label: :checked)
+    end
+
+    expect(graph.nodes(:checked).first.id).to eq(3)
+    expect(graph.nodes(:checked).last.id).to eq(4)
+  end
+
+  specify '#edges' do
+    graph = Mementus::Graph.new do
+      add_edge(id: 1, from: 1, to: 2)
+      add_edge(id: 2, from: 3, to: 4)
+    end
+
+    expect(graph.edges.first.id).to eq(1)
+    expect(graph.edges.last.id).to eq(2)
+  end
+
+  specify '#edges' do
+    graph = Mementus::Graph.new do
+      add_edge(id: 1, from: 1, to: 2)
+      add_edge(id: 2, from: 3, to: 4, label: :checked)
+    end
+
+    expect(graph.edges(:checked).first.id).to eq(2)
   end
 end
