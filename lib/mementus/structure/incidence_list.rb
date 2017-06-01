@@ -31,10 +31,12 @@ module Mementus
         end
       end
 
-      def has_edge?(edge, to=nil)
-        if to
-          return node(edge).outgoing.any? do |target_node|
-            target_node.id == to
+      def has_edge?(edge, target=nil)
+        if target
+          return false unless source = node(edge)
+
+          return source.outgoing.any? do |candidate|
+            candidate.id == target
           end
         end
 

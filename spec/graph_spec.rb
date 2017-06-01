@@ -152,12 +152,24 @@ describe Mementus::Graph do
       expect(graph.has_edge?(edge_1_2)).to be true
     end
 
+    specify '!edge' do
+      expect(graph.has_edge?(Mementus::Edge.new(id: 11, from: 22, to: 33))).to be false
+    end
+
     specify 'edge.id' do
       expect(graph.has_edge?(edge_1_2.id)).to be true
     end
 
-    specify 'from.id, to.id' do
+    specify '!edge.id' do
+      expect(graph.has_edge?(4)).to be false
+    end
+
+    specify 'from.id -> to.id' do
       expect(graph.has_edge?(1, 2)).to be true
+    end
+
+    specify '!from.id -> !to.id' do
+      expect(graph.has_edge?(12, 21)).to be false
     end
   end
 
