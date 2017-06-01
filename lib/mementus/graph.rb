@@ -36,8 +36,8 @@ module Mementus
       @structure.has_node?(node)
     end
 
-    def has_edge?(edge)
-      @structure.has_edge?(edge)
+    def has_edge?(edge, to=nil)
+      @structure.has_edge?(edge, to)
     end
 
     def node(id)

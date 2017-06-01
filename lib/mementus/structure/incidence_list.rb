@@ -31,8 +31,18 @@ module Mementus
         end
       end
 
-      def has_edge?(edge)
-        @edges.key?(edge.id)
+      def has_edge?(edge, to=nil)
+        if to
+          return node(edge).outgoing.any? do |target_node|
+            target_node.id == to
+          end
+        end
+
+        if edge.is_a?(Mementus::Edge) || edge.is_a?(Mementus::EdgeProxy)
+          @edges.key?(edge.id)
+        else
+          @edges.key?(edge)
+        end
       end
 
       def set_node(node)

@@ -143,12 +143,22 @@ describe Mementus::Graph do
     expect(graph.has_node?(node_1.id)).to be true
   end
 
-  specify '#has_edge?' do
+  describe '#has_edge?' do
     graph = Mementus::Graph.new do
       set_edge(edge_1_2)
     end
 
-    expect(graph.has_edge?(edge_1_2)).to be true
+    specify 'edge' do
+      expect(graph.has_edge?(edge_1_2)).to be true
+    end
+
+    specify 'edge.id' do
+      expect(graph.has_edge?(edge_1_2.id)).to be true
+    end
+
+    specify 'from.id, to.id' do
+      expect(graph.has_edge?(1, 2)).to be true
+    end
   end
 
   specify '#node(id)' do
