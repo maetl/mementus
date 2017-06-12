@@ -41,9 +41,12 @@ module Mementus
       @graph.incoming(@node.id, match)
     end
 
-    # TODO: Fix
     def outgoing_edges(match=nil)
       @graph.outgoing_edges(@node.id, match)
+    end
+
+    def incoming_edges(match=nil)
+      @graph.incoming_edges(@node.id, match)
     end
   end
 end

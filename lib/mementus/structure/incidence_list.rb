@@ -163,6 +163,46 @@ module Mementus
       def incoming_edges(id, match=nil)
         incident_edges(id, match, :in)
       end
+
+      def remove_node(node)
+        if node.is_a?(Mementus::Node) || node.is_a?(Mementus::NodeProxy)
+          node_id = node.id
+        else
+          node_id = node
+        end
+
+        @outgoing_e[node_id].each do |edge_id|
+          @incoming[@edges[edge_id].to.id].delete(node_id)
+          @incoming_e[@edges[edge_id].to.id].delete(edge_id)
+          @edges.delete(edge_id)
+        end
+
+        @incoming_e[node_id].each do |edge_id|
+          @outgoing[@edges[edge_id].from.id].delete(node_id)
+          @outgoing_e[@edges[edge_id].from.id].delete(edge_id)
+          @edges.delete(edge_id)
+        end
+
+        @nodes.delete(node_id)
+      end
+
+      def remove_edge(edge)
+        if edge.is_a?(Mementus::Edge) || edge.is_a?(Mementus::EdgeProxy)
+          edge_id = edge.id
+        else
+          edge_id = edge
+        end
+
+        edge = @edges[edge_id]
+
+        @outgoing[edge.from.id].delete(edge.to.id)
+        @incoming[edge.to.id].delete(edge.from.id)
+
+        @outgoing_e[edge.from.id].delete(edge_id)
+        @incoming_e[edge.to.id].delete(edge_id)
+
+        @edges.delete(edge_id)
+      end
     end
   end
 end
