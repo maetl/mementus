@@ -1,5 +1,3 @@
-require 'set'
-
 module Mementus
   class Graph
     def initialize(is_directed=true, &block)

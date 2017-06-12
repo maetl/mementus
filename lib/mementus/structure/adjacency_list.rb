@@ -1,3 +1,5 @@
+require 'set'
+
 module Mementus
   module Structure
     class AdjacencyList
