@@ -113,4 +113,22 @@ describe Mementus::MutableGraph do
       expect(edge[:name]).to eq('Relationship')
     end
   end
+
+  specify '#remove_node' do
+    graph = Mementus::MutableGraph.new
+    graph.add_edge(from: 1, to: 2)
+
+    graph.remove_node(2)
+    expect(graph.nodes_count).to eq(1)
+    expect(graph.edges_count).to eq(0)
+  end
+
+  specify '#remove_edge' do
+    graph = Mementus::MutableGraph.new
+    graph.add_edge(from: 1, to: 2)
+
+    graph.remove_edge(1)
+    expect(graph.nodes_count).to eq(2)
+    expect(graph.edges_count).to eq(0)
+  end
 end

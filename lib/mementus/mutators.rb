@@ -33,5 +33,13 @@ module Mementus
       builder.id = @edge_ids.next_id unless builder.id
       set_edge(builder.to_edge)
     end
+
+    def remove_node(node)
+      @structure.remove_node(node)
+    end
+
+    def remove_edge(edge)
+      @structure.remove_edge(edge)
+    end
   end
 end
