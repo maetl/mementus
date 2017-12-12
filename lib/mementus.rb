@@ -1,5 +1,7 @@
 require 'fiber'
 require 'mementus/graph'
+require 'mementus/mutators'
+require 'mementus/mutable_graph'
 require 'mementus/structure/adjacency_list'
 require 'mementus/structure/incidence_list'
 require 'mementus/node'
