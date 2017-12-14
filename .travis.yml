@@ -5,6 +5,5 @@ rvm:
   - ruby-head
   - jruby-9.1.13.0
   - jruby-head
-  - rbx-3
 before_install: gem install bundler
 script: bundle exec rspec
