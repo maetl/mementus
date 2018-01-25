@@ -1,11 +1,17 @@
 module Mementus
   class Graph
-    def initialize(is_directed=true, &block)
+    def initialize(is_mutable: false, is_directed: true, &block)
       builder = GraphBuilder.new(is_directed)
 
       BindingDelegator.new(builder, block.binding).instance_eval(&block) if block_given?
 
       @structure = builder.graph
+
+      if is_mutable
+        self.class.include Mutators
+        @node_ids = IntegerId.new
+        @edge_ids = IntegerId.new
+      end
     end
 
     def nodes_count

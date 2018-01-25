@@ -1,15 +1,15 @@
 require 'spec_helper'
 
-describe Mementus::MutableGraph do
+describe Mementus::Graph do
   specify '#new' do
-    graph = Mementus::MutableGraph.new
+    graph = Mementus::Graph.new(is_mutable: true)
 
     expect(graph.nodes_count).to eq(0)
     expect(graph.edges_count).to eq(0)
   end
 
   specify '#set_node' do
-    graph = Mementus::MutableGraph.new
+    graph = Mementus::Graph.new(is_mutable: true)
     graph.set_node(node_1)
 
     expect(graph.nodes_count).to eq(1)
@@ -17,7 +17,7 @@ describe Mementus::MutableGraph do
   end
 
   specify '#add_node' do
-    graph = Mementus::MutableGraph.new
+    graph = Mementus::Graph.new(is_mutable: true)
     graph.add_node(id: 1)
 
     expect(graph.nodes_count).to eq(1)
@@ -26,21 +26,21 @@ describe Mementus::MutableGraph do
   end
 
   specify '#add_node -> with auto id' do
-    graph = Mementus::MutableGraph.new
+    graph = Mementus::Graph.new(is_mutable: true)
     graph.add_node
 
     expect(graph.node(1).id).to eq(1)
   end
 
   specify '#add_node -> with props' do
-    graph = Mementus::MutableGraph.new
+    graph = Mementus::Graph.new(is_mutable: true)
     graph.add_node(props: { title: 'Vertex' })
 
     expect(graph.node(1)[:title]).to eq('Vertex')
   end
 
   specify '#create_node' do
-    graph = Mementus::MutableGraph.new
+    graph = Mementus::Graph.new(is_mutable: true)
     graph.create_node do |node|
       node.id = 20
       node.label = :vertex
@@ -58,7 +58,7 @@ describe Mementus::MutableGraph do
   end
 
   specify '#set_edge' do
-    graph = Mementus::MutableGraph.new
+    graph = Mementus::Graph.new(is_mutable: true)
     graph.set_edge(edge_1_2)
 
     expect(graph.nodes_count).to eq(2)
@@ -68,7 +68,7 @@ describe Mementus::MutableGraph do
   end
 
   specify '#add_edge' do
-    graph = Mementus::MutableGraph.new
+    graph = Mementus::Graph.new(is_mutable: true)
     graph.add_edge(id: 3, from: 1, to: 2)
 
     expect(graph.nodes_count).to eq(2)
@@ -79,21 +79,21 @@ describe Mementus::MutableGraph do
   end
 
   specify '#add_edge -> with auto id' do
-    graph = Mementus::MutableGraph.new
+    graph = Mementus::Graph.new(is_mutable: true)
     graph.add_edge(from: 1, to: 2)
 
     expect(graph.edge(1).id).to eq(1)
   end
 
   specify '#add_edge -> with props' do
-    graph = Mementus::MutableGraph.new
+    graph = Mementus::Graph.new(is_mutable: true)
     graph.add_edge(from: 1, to: 2, props: { title: 'Relationship' })
 
     expect(graph.edge(1)[:title]).to eq('Relationship')
   end
 
   specify '#create_edge' do
-    graph = Mementus::MutableGraph.new
+    graph = Mementus::Graph.new(is_mutable: true)
     graph.create_edge do |edge|
       edge.id = 123
       edge.label = :relationship
@@ -115,7 +115,7 @@ describe Mementus::MutableGraph do
   end
 
   specify '#remove_node' do
-    graph = Mementus::MutableGraph.new
+    graph = Mementus::Graph.new(is_mutable: true)
     graph.add_edge(from: 1, to: 2)
 
     graph.remove_node(2)
@@ -124,7 +124,7 @@ describe Mementus::MutableGraph do
   end
 
   specify '#remove_edge' do
-    graph = Mementus::MutableGraph.new
+    graph = Mementus::Graph.new(is_mutable: true)
     graph.add_edge(from: 1, to: 2)
 
     graph.remove_edge(1)
