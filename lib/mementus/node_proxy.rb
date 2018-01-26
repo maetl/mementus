@@ -21,12 +21,20 @@ module Mementus
       @node.props
     end
 
-    def out
-      Pipeline::Step.new([self], Pipeline::Pipe.new(@graph), @graph).out_e
+    def out(match=nil)
+      Pipeline::Step.new([self], Pipeline::Pipe.new(@graph), @graph).out(match)
     end
 
-    def out_e
-      Pipeline::Step.new([self], Pipeline::Pipe.new(@graph), @graph).out_e
+    def out_e(match=nil)
+      Pipeline::Step.new([self], Pipeline::Pipe.new(@graph), @graph).out_e(match)
+    end
+
+    def in(match=nil)
+      Pipeline::Step.new([self], Pipeline::Pipe.new(@graph), @graph).in(match)
+    end
+
+    def in_e(match=nil)
+      Pipeline::Step.new([self], Pipeline::Pipe.new(@graph), @graph).in(match)
     end
 
     def each_adjacent(&block)
