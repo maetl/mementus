@@ -9,8 +9,8 @@ module Mementus
 
       if is_mutable
         self.class.include Mutators
-        @node_ids = IntegerId.new
-        @edge_ids = IntegerId.new
+        @node_ids = IntegerId.new(builder.next_node_id)
+        @edge_ids = IntegerId.new(builder.next_edge_id)
       end
     end
 
