@@ -144,4 +144,36 @@ describe 'pipeline api' do
       expect(pipeline.all.first.from.id).to eq(1)
     end
   end
+
+  describe 'pipeline steps pull values lazily' do
+
+  end
+
+  describe '#traversal API pending' do
+    let(:traversal_graph) do
+      Mementus::Graph.new do
+        set_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 1), to: Mementus::Node.new(id: 2)))
+        set_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 2), to: Mementus::Node.new(id: 3)))
+        set_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 2), to: Mementus::Node.new(id: 5)))
+        set_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 1), to: Mementus::Node.new(id: 6)))
+        set_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 2), to: Mementus::Node.new(id: 7)))
+        set_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 7), to: Mementus::Node.new(id: 8)))
+        set_edge(Mementus::Edge.new(from: Mementus::Node.new(id: 5), to: Mementus::Node.new(id: 9)))
+      end
+    end
+
+    it 'traverses through outgoing nodes breadth first' do
+      pipeline = traversal_graph.n(1)
+
+      expected = [1,2,6,3,5,7,9,8]
+      expect(pipeline.breadth_first.all.map(&:id)).to eq(expected)
+    end
+
+    it 'traverses through incoming nodes depth first' do
+      pipeline = traversal_graph.n(1)
+
+      expected = [1,2,3,5,9,7,8,6]
+      expect(pipeline.depth_first.all.map(&:id)).to eq(expected)
+    end
+  end
 end

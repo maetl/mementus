@@ -1,24 +1,30 @@
 module Mementus
   class DepthFirstSearch
-    def initialize(graph, start_id)
+    def initialize(graph, start_id, method=:out)
       @graph = graph
       @start_id = start_id
+      @method = method
       @visited = { @start_id => true }
     end
 
     def each(&block)
-      visit(@start_id, &block)
+      visit(@graph.node(@start_id), &block)
     end
 
     private
 
-    def visit(id, &block)
-      @graph.outgoing(id).each do |adj_node|
-        next if @visited[adj_node.id]
+    def visit(node, &block)
+      block.call(node)
+      @visited[node.id] = true
 
-        @visited[adj_node.id] = true
-        block.call(adj_node)
-        visit(adj_node.id, &block)
+      method = case @method
+        when :out then :outgoing
+        when :in then :incoming
+      end
+
+      @graph.send(method, node.id).each do |adj_node|
+        next if @visited[adj_node.id]
+        visit(adj_node, &block)
       end
     end
   end

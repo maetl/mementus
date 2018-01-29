@@ -107,6 +107,14 @@ module Mementus
       def take(num)
         to_enum.take(num)
       end
+
+      def depth_first(method=:out)
+        Step.new(DepthFirstSearch.new(graph, source.first.id, method))
+      end
+
+      def breadth_first(method=:out)
+        Step.new(BreadthFirstSearch.new(graph, source.first.id, method))
+      end
     end
   end
 end

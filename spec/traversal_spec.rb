@@ -16,7 +16,7 @@ describe 'Basic graph traversals' do
   specify 'DepthFirstSearch#each' do
     traversal = Mementus::DepthFirstSearch.new(graph, 1)
 
-    expected = [2,3,5,9,7,8,6]
+    expected = [1,2,3,5,9,7,8,6]
     actual = []
     traversal.each { |n| actual << n.id }
 
@@ -26,7 +26,7 @@ describe 'Basic graph traversals' do
   specify 'BreadthFirstSearch#each' do
     traversal = Mementus::BreadthFirstSearch.new(graph, 1)
 
-    expected = [2,6,3,5,7,9,8]
+    expected = [1,2,6,3,5,7,9,8]
 
     actual = []
     traversal.each { |n| actual << n.id }
