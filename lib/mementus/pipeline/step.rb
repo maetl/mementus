@@ -63,7 +63,7 @@ module Mementus
           result.concat(node.outgoing(match))
         end
 
-        Step.new(outgoing_nodes)
+        Step.new(outgoing_nodes, Pipe.new(graph), graph)
       end
 
       # Traverse to the incoming nodes pointing to the source elements.
@@ -72,7 +72,7 @@ module Mementus
           result.concat(node.incoming(match))
         end
 
-        Step.new(incoming_nodes)
+        Step.new(incoming_nodes, Pipe.new(graph), graph)
       end
 
       # Traverse to the outgoing edges from the source elements.
@@ -81,7 +81,7 @@ module Mementus
           result.concat(graph.outgoing_edges(node.id, match))
         end
 
-        Step.new(outgoing_edges)
+        Step.new(outgoing_edges, Pipe.new(graph), graph)
       end
 
       # Traverse to the incoming edges pointing to the source elements.
@@ -90,7 +90,7 @@ module Mementus
           result.concat(graph.incoming_edges(node.id, match))
         end
 
-        Step.new(incoming_edges)
+        Step.new(incoming_edges, Pipe.new(graph), graph)
       end
 
       # Returns the first value in the sequence.
