@@ -34,7 +34,7 @@ module Mementus
     end
 
     def in_e(match=nil)
-      Pipeline::Step.new([self], Pipeline::Pipe.new(@graph), @graph).in(match)
+      Pipeline::Step.new([self], Pipeline::Pipe.new(@graph), @graph).in_e(match)
     end
 
     def each_adjacent(&block)
