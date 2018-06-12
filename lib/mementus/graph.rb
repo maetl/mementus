@@ -52,7 +52,7 @@ module Mementus
       @structure.edge(id)
     end
 
-    def nodes(match=nil)
+    def nodes(*match)
       @structure.nodes(match)
     end
 

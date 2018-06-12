@@ -74,19 +74,25 @@ module Mementus
         @nodes[id]
       end
 
-      def nodes(match=nil)
-        return @nodes.values unless match
+      def nodes(*match)
+        return @nodes.values if match.empty?
 
-        if match.is_a?(Hash)
-          @nodes.values.select do |node|
-            key = match.first.first
-            val = match.first.last
-            node[key] == val
+        criteria = Mementus::Criteria.new(match)
+
+        @nodes.values.select do |node|
+          selected = false
+
+          if criteria.label
+            selected = node.label == criteria.label
           end
-        elsif match.is_a?(Symbol)
-          @nodes.values.select do |node|
-            node.label == match
+
+          if criteria.props
+            key = criteria.props.first.first
+            val = criteria.props.first.last
+            selected = node[key] == val
           end
+
+          selected
         end
       end
 
