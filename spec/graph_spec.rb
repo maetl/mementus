@@ -123,12 +123,26 @@ describe Mementus::Graph do
     end
   end
 
-  specify '#has_node?' do
+  describe '#has_node?' do
     graph = Mementus::Graph.new do
       set_node(node_1)
     end
 
-    expect(graph.has_node?(node_1.id)).to be true
+    specify 'node' do
+      expect(graph.has_node?(node_1)).to be true
+    end
+
+    specify '!node' do
+      expect(graph.has_node?(node_2)).to be false
+    end
+
+    specify 'node.id' do
+      expect(graph.has_node?(node_1.id)).to be true
+    end
+
+    specify '!node.id' do
+      expect(graph.has_node?(node_2.id)).to be false
+    end
   end
 
   describe '#has_edge?' do

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-shared_examples_for "an indexed graph data structure" do
+shared_examples_for "an indexed graph data structure" do |supports_edge_ids: false|
   describe '#new' do
     it 'starts with empty node list' do
       expect(structure.nodes_count).to eq(0)
@@ -52,6 +52,20 @@ shared_examples_for "an indexed graph data structure" do
 
       expect(structure.has_edge?(edge)).to be true
     end
+
+    it 'tests for the presence of a given edge by id' do
+      edge = Mementus::Edge.new(id: 123, from: Mementus::Node.new(id: 1), to: Mementus::Node.new(id: 2))
+      structure.set_edge(edge)
+
+      expect(structure.has_edge?(123)).to be true
+    end if supports_edge_ids
+
+    it 'tests for the presence of a given edge between nodes' do
+      edge = Mementus::Edge.new(from: Mementus::Node.new(id: 1), to: Mementus::Node.new(id: 2))
+      structure.set_edge(edge)
+
+      expect(structure.has_edge?(1, 2)).to be true
+    end if supports_edge_ids
   end
 
   describe '#node(id)' do

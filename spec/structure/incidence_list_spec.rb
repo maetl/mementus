@@ -8,7 +8,7 @@ describe Mementus::Structure::IncidenceList do
     Mementus::Structure::IncidenceList.new
   end
 
-  it_behaves_like 'an indexed graph data structure'
+  it_behaves_like 'an indexed graph data structure', supports_edge_ids: true
   it_behaves_like 'a directed graph data structure'
   it_behaves_like 'a property graph data structure'
   it_behaves_like 'a mutable graph data structure'
