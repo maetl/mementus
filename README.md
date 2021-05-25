@@ -1,6 +1,14 @@
 # Mementus
 
-[![Build Status](https://travis-ci.org/maetl/mementus.svg?branch=master)](https://travis-ci.org/maetl/mementus)
+[![Build Status](https://img.shields.io/github/workflow/status/maetl/mementus/Ruby)](https://github.com/maetl/mementus/actions/workflows/ruby.yml)
+
+In-memory graph computing library for Ruby.
+
+## Install
+
+```
+gem install mementus
+```
 
 ## License
 
